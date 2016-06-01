@@ -9,13 +9,5 @@
 	ui = auto
 [credential]
 	helper = cache
-[url "https://github.com/"]
-    insteadOf = gh:
-[url "https://gist.github.com/"]
-    insteadOf = gist:
-[url "https://bitbucket.org/"]
-    insteadOf = bb:
-
 [alias]
     unstage = reset HEAD --
-
