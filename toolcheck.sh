@@ -4,19 +4,19 @@
 #print failure
 # fail ( name )
 function fail {
-  echo $' \e[31m(\u2717)\e[39m '$1
+  echo $' \e[31m(\u2717)\e[39m '"$1"
 }
 
 #print success
 # succ ( name )
 function succ {
-  echo $' \e[32m(\u2713)\e[39m '$1
+  echo $' \e[32m(\u2713)\e[39m '"$1"
 }
 
 # check whether a file exists
 # check_f( file, name )
 function check_f {
-  if [ -f $1 ] ; then
+  if [ -f "$1" ] ; then
     succ "$2"
   else
     fail "$2"
@@ -26,7 +26,7 @@ function check_f {
 # check whether a directory exists
 # check_f( directory, name )
 function check_d {
-  if [ -d $1 ] ; then
+  if [ -d "$1" ] ; then
     succ "$2"
   else
     fail "$2"
@@ -67,9 +67,11 @@ check_c "wheel -h" "wheel"
 check_c "virtualenv --version" "virtualenv"
 check_c "nosetests --version" "nosetests"
 check_c "coverage --version" "coverage"
+check_c "pylint --version" "PyLint"
 check_c "joe --version" "joe (gitignore files)"
 check_c "littlehttpserver --version" "littlehttpserver"
 check_c "howdoi --version" "howdoi"
+check_c "twitter --help" "twitter"
 check_d ${HOME}/.local/lib/python3.*/site-packages/dg "Dogelang (dg)"
 
 echo "JavaScript:"
@@ -79,6 +81,7 @@ check_f "${HOME}/.nvm/nvm.sh" "nvm (Node Version Manager)"
 check_c "grunt --version" "grunt"
 check_c "bower --version" "bower"
 check_c "phantomjs --version" "PhantomJS"
+check_c "jshint --version" "jshint"
 check_c "gjs --help" "gjs"
 check_c "tiddlywiki --version" "tiddlywiki"
 
@@ -90,6 +93,8 @@ echo "Haskell:"
 check_c "ghc --version" "ghc"
 check_c "ghci --version" "ghci"
 check_c "cabal --version" "cabal"
+check_c "hlint --version" "HLint"
+check_c "shellcheck -V" "ShellCheck"
 
 echo "ImageMagick:"
 check_c "mogrify --version" "mogrify"
