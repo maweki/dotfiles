@@ -58,6 +58,7 @@ check_c "which scp" "scp"
 check_c "rsync --version" "rsync"
 check_c "curl --version" "curl"
 check_c "wget --version" "wget"
+check_c "pass --version" "pass"
 
 echo "Python:"
 check_c "python --version" "python"
