@@ -84,6 +84,19 @@ check_c "phantomjs --version" "PhantomJS"
 check_c "jshint --version" "jshint"
 check_c "gjs --help" "gjs"
 check_c "tiddlywiki --version" "tiddlywiki"
+check_c "atom --version" "atom"
+check_c "apm --version" "apm"
+
+if apm --version &> /dev/null; then
+  echo "APM packages:"
+  APMINST=`apm list --installed --bare | grep -o "^[^@]*"`
+  while read package; do
+    # I am too dumb to correctly escape this one to use check_c
+    if echo "${APMINST}" | grep "^${package}$" &> /dev/null; then
+      succ "$package" ;  else
+      fail "$package" ;  fi
+  done < apm-packages
+fi
 
 echo "Java:"
 check_c "java -version" "java"
