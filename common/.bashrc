@@ -31,6 +31,10 @@ if which python &> /dev/null ; then
 		fi
 fi
 
+if which python3 &> /dev/null ; then
+	alias httpserver='python3 -m http.server'
+fi
+
 if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
 		alias dg="python3 -m dg"
 fi
