@@ -26,7 +26,9 @@ export EDITOR=nano
 
 if which python &> /dev/null ; then
 		alias pp='python -mjson.tool'
-		alias pipiu='pip install --user'
+		if which pip &> /dev/null ; then
+			alias pipiu='pip install --user'
+		fi
 fi
 
 if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
