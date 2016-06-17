@@ -37,7 +37,7 @@ if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/maweki/.local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 
