@@ -16,3 +16,7 @@
 	ap = add --patch
 	cm = commit -m
 	p = push
+[submodule]
+	fetchJobs = 4
+[diff]
+	compactionHeuristic = true
