@@ -11,3 +11,4 @@
 	helper = cache
 [alias]
     unstage = reset HEAD --
+		ap = add --patch
