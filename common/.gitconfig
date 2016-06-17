@@ -1,6 +1,8 @@
 [user]
 	email = maweki@gmail.com
 	name = Mario Wenzel
+[core]
+	editor = nano
 [log]
 	decorate = short
 [push]
