@@ -12,7 +12,7 @@
 [credential]
 	helper = cache
 [alias]
-    unstage = reset HEAD --
-		ap = add --patch
-		cm = commit -m
-		p = push
+	unstage = reset HEAD --
+	ap = add --patch
+	cm = commit -m
+	p = push
