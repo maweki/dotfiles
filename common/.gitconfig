@@ -14,3 +14,4 @@
 [alias]
     unstage = reset HEAD --
 		ap = add --patch
+		cm = commit -m
