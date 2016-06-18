@@ -16,6 +16,9 @@
 	ap = add --patch
 	cm = commit -m
 	p = push
+	g = gui
+	r = rebase
+	ri = rebase --interactive
 [submodule]
 	fetchJobs = 4
 [diff]
