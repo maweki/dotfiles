@@ -46,6 +46,7 @@ fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
+alias e="echo"
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
