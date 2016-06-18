@@ -14,3 +14,5 @@ minimap-selection
 pain-split
 regex-railroad-diagram
 todo-show
+language-latex
+latexer
