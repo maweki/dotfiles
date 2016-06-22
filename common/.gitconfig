@@ -15,7 +15,6 @@
 	unstage = reset HEAD --
 	ap = add --patch
 	cm = commit -m
-	p = push
 	g = gui
 	r = rebase
 	ri = rebase --interactive
