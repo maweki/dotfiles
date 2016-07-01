@@ -17,7 +17,6 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
 # TZ / LANG
 export TZ="Europe/Berlin"
-export LANG=de_DE.UTF-8
 
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ '
