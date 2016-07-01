@@ -5,6 +5,16 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# User specific environment and startup programs
+
+if [ -d $HOME/.cabal/bin ] ; then
+	PATH=$HOME/.cabal/bin:$PATH
+fi
+
+export PATH=$HOME/.local/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
+
+
 # TZ
 export TZ="Europe/Berlin"
 
@@ -46,7 +56,6 @@ if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
