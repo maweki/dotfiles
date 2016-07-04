@@ -74,6 +74,7 @@ check_c "joe --version" "joe (gitignore files)"
 check_c "littlehttpserver --version" "littlehttpserver"
 check_c "howdoi --version" "howdoi"
 check_c "twitter --help" "twitter"
+check_c "which pyhn" "pyhn"
 check_d ${HOME}/.local/lib/python3.*/site-packages/dg "Dogelang (dg)"
 
 echo "JavaScript:"
