@@ -19,6 +19,8 @@
 	r = rebase
 	ri = rebase --interactive
 	d = diff
+	s = status
+	rsv = remote --verbose show
 [submodule]
 	fetchJobs = 4
 [diff]
