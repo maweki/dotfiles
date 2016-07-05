@@ -21,6 +21,7 @@
 	d = diff
 	s = status
 	rsv = remote --verbose show
+	l = log
 [submodule]
 	fetchJobs = 4
 [diff]
