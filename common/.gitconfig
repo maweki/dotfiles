@@ -18,6 +18,7 @@
 	g = gui
 	r = rebase
 	ri = rebase --interactive
+	d = diff
 [submodule]
 	fetchJobs = 4
 [diff]
