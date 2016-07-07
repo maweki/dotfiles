@@ -13,6 +13,7 @@
 	helper = cache
 [alias]
 	unstage = reset HEAD --
+	a = add
 	ap = add --patch
 	cm = commit -m
 	g = gui
