@@ -15,14 +15,15 @@
 	unstage = reset HEAD --
 	a = add
 	ap = add --patch
-	cm = commit -m
+	l = log
 	g = gui
 	r = rebase
 	ri = rebase --interactive
 	d = diff
 	s = status
+	cm = commit -m
 	rsv = remote --verbose show
-	l = log
+	rvs = remote --verbose show
 [submodule]
 	fetchJobs = 4
 [diff]
