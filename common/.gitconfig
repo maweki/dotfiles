@@ -24,6 +24,7 @@
 	cm = commit -m
 	rsv = remote --verbose show
 	rvs = remote --verbose show
+	pullr = pull --rebase
 [submodule]
 	fetchJobs = 4
 [diff]
