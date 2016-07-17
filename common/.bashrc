@@ -24,6 +24,8 @@ PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ 
 if which git &> /dev/null ; then
 		# adding git completion and info
 		[ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
+		[ -s /usr/share/doc/git-core-doc/contrib/completion/git-prompt.sh ] && source /usr/share/doc/git-core-doc/contrib/completion/git-prompt.sh
+		[ -s /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash ] && source /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash
 		[ -s /etc/bash_completion.d/git ] && source /etc/bash_completion.d/git
 		[ -s /etc/bash_completion.d/git-flow-completion.bash ] && source /etc/bash_completion.d/git-flow-completion.bash
 
