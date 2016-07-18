@@ -31,8 +31,11 @@ if which git &> /dev/null ; then
 
 		export GIT_PS1_SHOWDIRTYSTATE=1
 
-		if __git_ps1 &> /dev/null ; then
+		if which __git_ps1 &> /dev/null ; then
 				PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)\n\$ '
+		fi
+		if which __git_complete &> /dev/null ; then
+				__git_complete g __git_main
 		fi
 fi
 
