@@ -25,6 +25,7 @@
 	rsv = remote --verbose show
 	rvs = remote --verbose show
 	pullr = pull --rebase
+	undo = "!f() { \\\n    git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; \\\n}; f"
 [submodule]
 	fetchJobs = 4
 [diff]
