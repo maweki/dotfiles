@@ -45,6 +45,7 @@ export EDITOR=nano
 if which python &> /dev/null ; then
 		alias pp='python -mjson.tool'
 		alias sum='python -c "import sys; print sum(int(l) for l in sys.stdin)"'
+		alias sumf='python -c "import sys; print sum(float(l) for l in sys.stdin)"'
 		if which pip &> /dev/null ; then
 			alias pipiu='pip install --user'
 		fi
