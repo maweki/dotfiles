@@ -21,6 +21,9 @@ export TZ="Europe/Berlin"
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ '
 
+# start tmux and go from there
+[[ -z $TMUX ]] && which tmux &> /dev/null && exec tmux
+
 if which git &> /dev/null ; then
 		# adding git completion and info
 		[ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
