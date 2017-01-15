@@ -21,6 +21,9 @@ export TZ="Europe/Berlin"
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ '
 
+# prevent ctrl+s from keeping on freezing because I can never remember ctrl+q
+stty ixany
+
 # start tmux and go from there
 [[ -z $TMUX ]] && which tmux &> /dev/null && ((tmux has-session && exec tmux attach) || exec tmux) 
 
