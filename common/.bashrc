@@ -61,6 +61,10 @@ if which python3 &> /dev/null ; then
 	alias httpserver='python3 -m http.server'
 fi
 
+if which stack &> /dev/null ; then
+	eval "$(stack --bash-completion-script stack)"
+fi
+
 if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
 		alias dg="python3 -m dg"
 fi
