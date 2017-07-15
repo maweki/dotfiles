@@ -88,6 +88,9 @@ export NVM_DIR="${HOME}/.nvm"
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 export HISTSIZE=5000
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:bg:fg:history'
+PROMPT_COMMAND='history -a'
 
 # color everything
 alias egrep='egrep --color=auto'
