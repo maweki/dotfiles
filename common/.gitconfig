@@ -15,6 +15,7 @@
 	unstage = reset HEAD --
 	a = add
 	ap = add --patch
+	b = branch
 	l = log
 	g = gui
 	r = rebase
