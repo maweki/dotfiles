@@ -41,8 +41,9 @@ if which git &> /dev/null ; then
 		if __git_ps1 &> /dev/null ; then
 				PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)\n\$ '
 		fi
-		if which __git_complete &> /dev/null ; then
-				__git_complete g __git_main
+
+		if which __git_wrap__git_main &> /dev/null ; then
+				complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
 		fi
 fi
 
