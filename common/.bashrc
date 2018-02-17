@@ -107,6 +107,7 @@ alias zegrep='zegrep --color=auto'
 alias zfgrep='zfgrep --color=auto'
 alias zgrep='zgrep --color=auto'
 
+[ -s ~/.plog.sh ] && source ~/.plog.sh
 
 # bash-completion for sudo
 complete -cf sudo
