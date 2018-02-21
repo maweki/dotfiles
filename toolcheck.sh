@@ -115,6 +115,10 @@ check_c "hlint --version" "HLint"
 check_c "shellcheck -V" "ShellCheck"
 check_c "stack --version" "stack"
 
+echo "Deductive:"
+check_c "swipl --version" "swi-Prolog"
+check_c "datalog -v" "datalog"
+
 echo "ImageMagick:"
 check_c "mogrify --version" "mogrify"
 check_c "convert --version" "convert"
