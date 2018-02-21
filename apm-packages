@@ -4,7 +4,6 @@ gist-it
 git-blame
 git-history
 git-plus
-language-haskell
 linter
 linter-jshint
 linter-pylint
@@ -17,3 +16,5 @@ todo-show
 language-latex
 latexer
 language-prolog
+language-restructuredtext
+language-haskell
