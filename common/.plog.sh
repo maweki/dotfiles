@@ -27,7 +27,7 @@ plog () {
     if [ -z "$1" ]
     then
         pushd $PLOGDIR
-        git log --no-notes --date=local --format="%C(cyan)%ad, %ar: %C(white)%s"  --no-merges
+        git log --no-notes --reverse --date=local --format="%C(cyan)%ad, %ar: %C(white)%s"  --no-merges
         popd
     fi
     
