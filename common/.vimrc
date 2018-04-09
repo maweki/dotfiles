@@ -17,6 +17,9 @@ map j gj
 map k gk
 set linebreak
 
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+set list
+
 syntax on
 
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
