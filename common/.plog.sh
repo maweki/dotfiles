@@ -34,7 +34,7 @@ plog () {
     if [ "$1" == "sync" ]
     then
         pushd $PLOGDIR
-        git pull
+        git pull --commit
         git push
         popd
     fi
