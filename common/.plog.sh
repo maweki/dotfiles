@@ -44,7 +44,7 @@ plog () {
         pushd $PLOGDIR
         if echo $2 | grep ":" > /dev/null
         then
-          git commit --date $2 --quiet --allow-empty -m "${*:3}"
+          git commit --date "$2" --quiet --allow-empty -m "${*:3}"
         else
           git commit --quiet --allow-empty -m "${*:2}"
         fi
