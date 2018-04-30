@@ -21,10 +21,12 @@ set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
 set list
 
 syntax on
+set smartindent
 
 autocmd FileType html setlocal shiftwidth=2 tabstop=2
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4
 autocmd FileType haskell setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType markdown setlocal expandtab tabstop=4 shiftwidth=4
 
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
