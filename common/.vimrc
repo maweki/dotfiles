@@ -37,4 +37,5 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter' 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'lervag/vimtex'
 call plug#end()
