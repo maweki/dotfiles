@@ -74,7 +74,7 @@ alias e="echo"
 alias g="git"
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-complete -F _ssh issh
+complete -F _known_hosts issh
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
