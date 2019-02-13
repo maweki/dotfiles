@@ -49,13 +49,10 @@ fi
 
 export EDITOR=nano
 
-if which python &> /dev/null ; then
-		alias pp='python -mjson.tool'
-		alias sum='python -c "import sys; print sum(int(l) for l in sys.stdin)"'
-		alias sumf='python -c "import sys; print sum(float(l) for l in sys.stdin)"'
-fi
-
 if which python3 &> /dev/null ; then
+	alias pp='python3 -mjson.tool'
+	alias sum='python3 -c "import sys; print(sum(int(l) for l in sys.stdin))"'
+	alias sumf='python3 -c "import sys; print(sum(float(l) for l in sys.stdin))"'
 	alias httpserver='python3 -m http.server'
 fi
 
