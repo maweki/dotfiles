@@ -53,6 +53,7 @@ if which python &> /dev/null ; then
 		alias pp='python -mjson.tool'
 		alias sum='python -c "import sys; print sum(int(l) for l in sys.stdin)"'
 		alias sumf='python -c "import sys; print sum(float(l) for l in sys.stdin)"'
+		alias tsv_to_csv='python -c "import sys; import csv; tabin = csv.reader(sys.stdin, dialect=csv.excel_tab); commaout = csv.writer(sys.stdout, dialect=csv.excel); list(commaout.writerow(row) for row in tabin);"'
 fi
 
 if which python3 &> /dev/null ; then
