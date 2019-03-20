@@ -49,14 +49,11 @@ fi
 
 export EDITOR=nano
 
-if which python &> /dev/null ; then
-		alias pp='python -mjson.tool'
-		alias sum='python -c "import sys; print sum(int(l) for l in sys.stdin)"'
-		alias sumf='python -c "import sys; print sum(float(l) for l in sys.stdin)"'
-		alias tsv_to_csv='python -c "import sys; import csv; tabin = csv.reader(sys.stdin, dialect=csv.excel_tab); commaout = csv.writer(sys.stdout, dialect=csv.excel); list(commaout.writerow(row) for row in tabin);"'
-fi
-
 if which python3 &> /dev/null ; then
+	alias pp='python3 -mjson.tool'
+	alias sum='python3 -c "import sys; print(sum(int(l) for l in sys.stdin))"'
+	alias sumf='python3 -c "import sys; print(sum(float(l) for l in sys.stdin))"'
+	alias tsv_to_csv='python3 -c "import sys; import csv; tabin = csv.reader(sys.stdin, dialect=csv.excel_tab); commaout = csv.writer(sys.stdout, dialect=csv.excel); list(commaout.writerow(row) for row in tabin);"'
 	alias httpserver='python3 -m http.server'
 fi
 
@@ -78,7 +75,7 @@ alias e="echo"
 alias g="git"
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-complete -F _ssh issh
+complete -F _known_hosts issh
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
