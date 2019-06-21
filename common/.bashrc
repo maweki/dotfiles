@@ -65,6 +65,11 @@ if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
 		alias dg="python3 -m dg"
 fi
 
+if [ -d ${HOME}/.local/android/sdk ] ; then
+		export ANDROID_HOME=${HOME}/.local/android/sdk
+		export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
+fi
+
 if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
@@ -126,3 +131,9 @@ else
 fi
 unset __conda_setup
 # <<< conda init <<<
+
+###-tns-completion-start-###
+if [ -f /home/maweki/.tnsrc ]; then
+    source /home/maweki/.tnsrc
+fi
+###-tns-completion-end-###
