@@ -11,6 +11,11 @@ if [ -d $HOME/.cabal/bin ] ; then
 	PATH=$HOME/.cabal/bin:$PATH
 fi
 
+if [ -d ${HOME}/.local/android/sdk ] ; then
+		export ANDROID_HOME=${HOME}/.local/android/sdk
+		export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
+fi
+
 export PATH=$HOME/.local/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
@@ -63,11 +68,6 @@ fi
 
 if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
 		alias dg="python3 -m dg"
-fi
-
-if [ -d ${HOME}/.local/android/sdk ] ; then
-		export ANDROID_HOME=${HOME}/.local/android/sdk
-		export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
 fi
 
 if [ -n "$UNDER_JHBUILD" ]; then
