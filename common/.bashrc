@@ -105,10 +105,26 @@ export NVM_DIR="${HOME}/.nvm"
 
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
-export HISTSIZE=5000
-HISTCONTROL=ignoreboth
-HISTIGNORE='ls:bg:fg:history'
+# Save multi-line commands as one command
+shopt -s cmdhist
+HISTSIZE=500000
+HISTFILESIZE=100000
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 PROMPT_COMMAND='history -a'
+# Avoid duplicate entries
+HISTCONTROL="erasedups:ignoreboth"
+
+# Use standard ISO 8601 timestamp
+# %F equivalent to %Y-%m-%d
+# %T equivalent to %H:%M:%S (24-hours format)
+HISTTIMEFORMAT='%F %T '
+
+# Enable incremental history search with up/down arrows (also Readline goodness)
+# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
 
 # color everything
 alias egrep='egrep --color=auto'
