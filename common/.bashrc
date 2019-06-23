@@ -29,6 +29,23 @@ PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ 
 # prevent ctrl+s from keeping on freezing because I can never remember ctrl+q
 stty ixany
 
+# Prevent file overwrite on stdout redirection
+# Use `>|` to force redirection to an existing file
+set -o noclobber
+
+# Update window size after every command
+shopt -s checkwinsize
+
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
+
+# Turn on recursive globbing (enables ** to recurse all directories)
+shopt -s globstar 2> /dev/null
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
 # start tmux and go from there
 #[[ -z $TMUX ]] && which tmux &> /dev/null && (exec tmux)
 
