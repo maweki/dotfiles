@@ -148,6 +148,19 @@ alias zgrep='zgrep --color=auto'
 # bash-completion for sudo
 complete -cf sudo
 
+## SMARTER TAB-COMPLETION (Readline bindings) ##
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
+
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind "set mark-symlinked-directories on"
 
 # >>> conda init >>>
 # !! Contents within this block are managed by 'conda init' !!
