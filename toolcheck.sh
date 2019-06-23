@@ -63,6 +63,8 @@ check_c "curl --version" "curl"
 check_c "wget --version" "wget"
 check_c "pass --version" "pass"
 check_c "hstr --version" "hstr" # https://github.com/dvorka/hstr
+check_c "googler --version" "googler" # https://github.com/jarun/googler
+check_c "ddgr --version" "ddgr" # https://github.com/jarun/ddgr
 
 echo "Python:"
 check_c "python2 --version" "python2"

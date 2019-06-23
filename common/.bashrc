@@ -77,20 +77,22 @@ if which python3 &> /dev/null ; then
 	alias sumf='python3 -c "import sys; print(sum(float(l) for l in sys.stdin))"'
 	alias tsv_to_csv='python3 -c "import sys; import csv; tabin = csv.reader(sys.stdin, dialect=csv.excel_tab); commaout = csv.writer(sys.stdout, dialect=csv.excel); list(commaout.writerow(row) for row in tabin);"'
 	alias httpserver='python3 -m http.server'
+	if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
+			alias dg="python3 -m dg"
+	fi
 fi
 
 if which stack &> /dev/null ; then
 	eval "$(stack --bash-completion-script stack)"
 fi
 
-if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
-		alias dg="python3 -m dg"
-fi
-
 if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
 
+if which ddgr &> /dev/null ; then
+	alias websearch="ddgr --np -x"
+fi
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
