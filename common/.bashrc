@@ -113,6 +113,11 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 PROMPT_COMMAND='history -a'
 # Avoid duplicate entries
 HISTCONTROL="erasedups:ignoreboth"
+export HH_CONFIG=hicolor,prompt-bottom
+# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
+if which hh &> /dev/null ; then
+	if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
+fi
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d

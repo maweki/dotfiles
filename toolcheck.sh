@@ -62,6 +62,7 @@ check_c "rsync --version" "rsync"
 check_c "curl --version" "curl"
 check_c "wget --version" "wget"
 check_c "pass --version" "pass"
+check_c "hstr --version" "hstr" # https://github.com/dvorka/hstr
 
 echo "Python:"
 check_c "python2 --version" "python2"
