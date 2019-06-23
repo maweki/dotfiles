@@ -79,6 +79,7 @@ check_c "pylint --version" "PyLint"
 check_c "joe --version" "joe (gitignore files)"
 check_c "howdoi --version" "howdoi"
 check_c "twitter --help" "twitter"
+check_c "gcalcli --version" "gcalcli" # https://github.com/insanum/gcalcli
 check_c "which hn" "haxor-news (hn)"
 check_c "rtv --version" "Reddit Viewer (rtv)"
 check_d ${HOME}/.local/lib/python3.*/site-packages/dg "Dogelang (dg)"
