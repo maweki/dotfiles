@@ -82,6 +82,10 @@ if which python3 &> /dev/null ; then
 	fi
 fi
 
+if which syncthing &> /dev/null ; then
+    alias syncthing="syncthing -no-browser"
+fi
+
 if which stack &> /dev/null ; then
 	eval "$(stack --bash-completion-script stack)"
 fi
