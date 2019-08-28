@@ -65,6 +65,7 @@ check_c "pass --version" "pass"
 check_c "hstr --version" "hstr" # https://github.com/dvorka/hstr
 check_c "googler --version" "googler" # https://github.com/jarun/googler
 check_c "ddgr --version" "ddgr" # https://github.com/jarun/ddgr
+check_c "which wtfutil" "wtfutil" # https://github.com/wtfutil/wtf/releases
 
 echo "Python:"
 check_c "python2 --version" "python2"
