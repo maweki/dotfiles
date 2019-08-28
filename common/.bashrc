@@ -118,7 +118,7 @@ HISTFILESIZE=100000
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 PROMPT_COMMAND='history -a'
 # Avoid duplicate entries
-HISTCONTROL="erasedups:ignoreboth"
+HISTCONTROL="erasedups:ignoreboth:rawhistory"
 export HH_CONFIG=hicolor,prompt-bottom
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
 if which hh &> /dev/null ; then
