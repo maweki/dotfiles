@@ -32,3 +32,4 @@
 	fetchJobs = 4
 [diff]
 	compactionHeuristic = true
+	colorMoved = default
