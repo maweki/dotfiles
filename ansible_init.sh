@@ -9,7 +9,7 @@ chmod 600 ~/.ssh/authorized_keys
 
 if which apt-get &> /dev/null ; then
 	apt-get update
-	apt-get install -y python ssh-client
+	apt-get install -y python3 python ssh-client
 fi
 if which dnf &> /dev/null ; then
 	dnf install -y openssh-clients
