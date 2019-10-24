@@ -98,6 +98,16 @@ if which ddgr &> /dev/null ; then
 	alias websearch="ddgr --np -x"
 fi
 
+if which ffmpeg &> /dev/null ; then
+	recode_audio () {
+		for video in "$@"
+		do
+			extension="${video##*.}"
+			ffmpeg -i "${video}" -vcodec copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+		done
+	}
+fi
+
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 alias g="git"
