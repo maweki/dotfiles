@@ -99,7 +99,7 @@ if which ddgr &> /dev/null ; then
 fi
 
 if which ffmpeg &> /dev/null ; then
-	recode_audio () {
+	recode-audio () {
 		for video in "$@"
 		do
 			extension="${video##*.}"
