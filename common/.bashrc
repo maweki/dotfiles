@@ -36,6 +36,9 @@ set -o noclobber
 # Update window size after every command
 shopt -s checkwinsize
 
+# Enable the future of globbing
+shopt -s globstar
+
 # Enable history expansion with space
 # E.g. typing !!<space> will replace the !! with your last command
 bind Space:magic-space
