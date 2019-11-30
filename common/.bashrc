@@ -110,21 +110,21 @@ if which ffmpeg &> /dev/null ; then
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -vcodec copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vcodec copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
 		done
 	}
 	recode-720p () {
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
 		done
 	}
 	recode-1080p () {
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
 		done
 	}
 fi
