@@ -52,6 +52,10 @@ shopt -s nocaseglob;
 # start tmux and go from there
 #[[ -z $TMUX ]] && which tmux &> /dev/null && (exec tmux)
 
+if which xdg-open &> /dev/null ; then
+	alias x='xdg-open'
+fi
+
 if which git &> /dev/null ; then
 		# adding git completion and info
 		[ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
