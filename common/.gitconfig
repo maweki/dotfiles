@@ -27,7 +27,9 @@
 	rvs = remote --verbose show
 	pullr = pull --rebase
 	undo = "!f() { \\\n    git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; \\\n}; f"
+	graph = log --all --oneline --graph
 [submodule]
 	fetchJobs = 4
 [diff]
 	compactionHeuristic = true
+	colorMoved = default

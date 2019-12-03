@@ -40,6 +40,9 @@ set -o noclobber
 # Update window size after every command
 shopt -s checkwinsize
 
+# Enable the future of globbing
+shopt -s globstar
+
 # Enable history expansion with space
 # E.g. typing !!<space> will replace the !! with your last command
 bind Space:magic-space
@@ -52,6 +55,10 @@ shopt -s nocaseglob;
 
 # start tmux and go from there
 #[[ -z $TMUX ]] && which tmux &> /dev/null && (exec tmux)
+
+if which xdg-open &> /dev/null ; then
+	alias x='xdg-open'
+fi
 
 if which git &> /dev/null ; then
 		# adding git completion and info
@@ -100,6 +107,30 @@ fi
 
 if which ddgr &> /dev/null ; then
 	alias websearch="ddgr --np -x"
+fi
+
+if which ffmpeg &> /dev/null ; then
+	recode-audio () {
+		for video in "$@"
+		do
+			extension="${video##*.}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vcodec copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+		done
+	}
+	recode-720p () {
+		for video in "$@"
+		do
+			extension="${video##*.}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+		done
+	}
+	recode-1080p () {
+		for video in "$@"
+		do
+			extension="${video##*.}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+		done
+	}
 fi
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
@@ -151,6 +182,7 @@ alias ls='ls --color=auto'
 alias lsd='ls -tl'
 alias lss='ls -Sl'
 alias ..='cd ..'
+alias rm='rm -v'
 alias xzegrep='xzegrep --color=auto'
 alias xzfgrep='xzfgrep --color=auto'
 alias xzgrep='xzgrep --color=auto'
