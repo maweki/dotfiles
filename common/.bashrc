@@ -133,11 +133,20 @@ alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 alias g="git"
 
+conditional-ssh-args () {
+	if which ping &> /dev/null && which arp &> /dev/null ; then
+		ping -c 1 -W 3 ${1} &> /dev/null
+		if ! arp | grep -i "${2}" &> /dev/null ; then
+			echo -e "-J ${3}"
+		fi
+	fi
+}
+
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-alias sshome="ssh -J root@mwhome.hopto.org"
-alias scphome="scp -o 'ProxyJump root@mwhome.hopto.org'"
+alias ssh-home='ssh `conditional-ssh-args 192.168.1.1 84:16:F9:2A:82:7C root@mwhome.hopto.org`'
+alias scp-home='scp `conditional-ssh-args 192.168.1.1 84:16:F9:2A:82:7C root@mwhome.hopto.org`'
 complete -F _known_hosts issh
-complete -F _known_hosts sshome
+complete -F _known_hosts ssh-home
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
