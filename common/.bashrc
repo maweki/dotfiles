@@ -134,7 +134,10 @@ alias e="echo"
 alias g="git"
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias sshome="ssh -J root@mwhome.hopto.org"
+alias scphome="scp -o 'ProxyJump root@mwhome.hopto.org'"
 complete -F _known_hosts issh
+complete -F _known_hosts sshome
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
