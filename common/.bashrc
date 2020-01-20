@@ -143,8 +143,10 @@ conditional-ssh-args () {
 }
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-alias ssh-home='ssh `conditional-ssh-args 192.168.1.1 84:16:F9:2A:82:7C root@mwhome.hopto.org`'
-alias scp-home='scp `conditional-ssh-args 192.168.1.1 84:16:F9:2A:82:7C root@mwhome.hopto.org`'
+alias ssh-home='ssh -J root@mwhome.hopto.org'
+alias scp-home='scp -J root@mwhome.hopto.org'
+alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
+alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 complete -F _known_hosts issh
 complete -F _known_hosts ssh-home
 
