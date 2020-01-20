@@ -135,7 +135,7 @@ alias g="git"
 
 conditional-ssh-args () {
 	if which ping &> /dev/null && which arp &> /dev/null ; then
-		ping -c 1 -W 3 ${1} &> /dev/null
+		ping -c 1 -W 1 ${1} &> /dev/null
 		if ! arp | grep -i "${2}" &> /dev/null ; then
 			echo -e "-J ${3}"
 		fi
