@@ -43,10 +43,6 @@ shopt -s checkwinsize
 # Enable the future of globbing
 shopt -s globstar
 
-# Enable history expansion with space
-# E.g. typing !!<space> will replace the !! with your last command
-bind Space:magic-space
-
 # Turn on recursive globbing (enables ** to recurse all directories)
 shopt -s globstar 2> /dev/null
 
@@ -114,31 +110,50 @@ if which ffmpeg &> /dev/null ; then
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vcodec copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vcodec copy "${video}.newaudio.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.newaudio.${extension}" "${video}"
 		done
 	}
 	recode-720p () {
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.720p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.720p.${extension}" "${video}"
 		done
 	}
 	recode-1080p () {
 		for video in "$@"
 		do
 			extension="${video##*.}"
-			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.new.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.new.${extension}" "${video}"
+			ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
 		done
 	}
+fi
+
+if [ ! -f /sbin/clusterctrl ]; then
+    alias clusterctrl='ssh cnat.local /sbin/clusterctrl'
 fi
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 alias g="git"
 
+conditional-ssh-args () {
+	if which ping &> /dev/null && which arp &> /dev/null ; then
+		ping -c 1 -W 1 ${1} &> /dev/null
+		if ! arp | grep -i "${2}" &> /dev/null ; then
+			echo -e "-J ${3}"
+		fi
+	fi
+}
+
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias ssh-home='ssh -J root@mwhome.hopto.org'
+alias scp-home='scp -J root@mwhome.hopto.org'
+alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
+alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 complete -F _known_hosts issh
+complete -F _known_hosts ssh-home
+complete -F _known_hosts ssh-work
 
 export NVM_DIR="${HOME}/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -165,12 +180,32 @@ fi
 # %T equivalent to %H:%M:%S (24-hours format)
 HISTTIMEFORMAT='%F %T '
 
-# Enable incremental history search with up/down arrows (also Readline goodness)
-# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-bind '"\e[C": forward-char'
-bind '"\e[D": backward-char'
+if [[ $- == *i* ]] ; then # If shell is interactive
+	# Enable history expansion with space
+	# E.g. typing !!<space> will replace the !! with your last command
+	bind Space:magic-space
+
+	# Enable incremental history search with up/down arrows (also Readline goodness)
+	# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+	bind '"\e[A": history-search-backward'
+	bind '"\e[B": history-search-forward'
+	bind '"\e[C": forward-char'
+	bind '"\e[D": backward-char'
+
+	## SMARTER TAB-COMPLETION (Readline bindings) ##
+
+	# Perform file completion in a case insensitive fashion
+	bind "set completion-ignore-case on"
+
+	# Treat hyphens and underscores as equivalent
+	bind "set completion-map-case on"
+
+	# Display matches for ambiguous patterns at first tab press
+	bind "set show-all-if-ambiguous on"
+
+	# Immediately add a trailing slash when autocompleting symlinks to directories
+	bind "set mark-symlinked-directories on"
+fi
 
 # color everything
 alias egrep='egrep --color=auto'
@@ -194,20 +229,6 @@ alias zgrep='zgrep --color=auto'
 
 # bash-completion for sudo
 complete -cf sudo
-
-## SMARTER TAB-COMPLETION (Readline bindings) ##
-
-# Perform file completion in a case insensitive fashion
-bind "set completion-ignore-case on"
-
-# Treat hyphens and underscores as equivalent
-bind "set completion-map-case on"
-
-# Display matches for ambiguous patterns at first tab press
-bind "set show-all-if-ambiguous on"
-
-# Immediately add a trailing slash when autocompleting symlinks to directories
-bind "set mark-symlinked-directories on"
 
 # >>> conda init >>>
 # !! Contents within this block are managed by 'conda init' !!
