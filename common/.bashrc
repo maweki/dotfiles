@@ -11,6 +11,10 @@ if [ -d $HOME/.cabal/bin ] ; then
 	PATH=$HOME/.cabal/bin:$PATH
 fi
 
+if [ -d $HOME/.cargo/bin ] ; then
+	PATH=$HOME/.cargo/bin:$PATH
+fi
+
 if [ -d ${HOME}/.local/android/sdk ] ; then
 		export ANDROID_HOME=${HOME}/.local/android/sdk
 		export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
