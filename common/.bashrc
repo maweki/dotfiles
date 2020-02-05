@@ -77,7 +77,7 @@ if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
     echo -n 'terminate '; tput rev; echo -n '\'
     tput sgr0; echo -n '}'
 fi
-    __detached=$(top -b -n 1 | pgrep -x screen &> /dev/null && echo -n `screen -ls | grep Detached | awk -F ' ' '{print $1}'`)
+    __detached=$(pgrep -x screen &> /dev/null && echo -n `screen -ls | grep Detached | awk -F ' ' '{print $1}'`)
     [ -z "${__detached}" ] || (echo -n " detached:["; echo -n "${__detached}"; echo -n "]")
 }
 else
