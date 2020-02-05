@@ -56,6 +56,7 @@ if which xdg-open &> /dev/null ; then
 	alias x='xdg-open'
 fi
 
+if which screen &> /dev/null ; then
 __screen_info () {
 if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
     echo -n ' {C-a '
@@ -75,8 +76,16 @@ if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
 		tput sgr0; echo -n " / "
 		echo -n 'terminate \'
     echo -n '}'
+else
+    __detached=$(top -b -n 1 | grep ' screen' &> /dev/null && echo -n `screen -ls | grep Detached`)
+		[ -z "${__detached}" ] || (echo -n " ["; echo -n "${__detached}"; echo -n "]")
 fi
 }
+else
+__screen_info () {
+	return
+}
+fi
 
 if which git &> /dev/null ; then
 		# adding git completion and info
