@@ -28,7 +28,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 #export TZ="Europe/Berlin"
 
 # colorful terminal with results color
-PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD\n\$ '
+PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
 
 # prevent ctrl+s from keeping on freezing because I can never remember ctrl+q
 stty ixany
@@ -56,6 +56,28 @@ if which xdg-open &> /dev/null ; then
 	alias x='xdg-open'
 fi
 
+__screen_info () {
+if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
+    echo -n ' {C-a '
+    tput bold; echo -n 'd'; tput sgr0; echo -n 'etach'
+		tput sgr0; echo -n " / "
+    echo -n 'splitR'; tput setaf 2; echo -n '-'; tput setaf 1; echo -n '|'; tput setaf 2; echo -n ' S'; tput setaf 1; echo -n '|'
+		tput sgr0; echo -n " / "
+		echo -n 'removeR X'
+		tput sgr0; echo -n " / "
+		tput bold; echo -n 'c'; tput sgr0; echo -n 'reateW'
+		tput sgr0; echo -n " / "
+		tput bold; echo -n 'k'; tput sgr0; echo -n 'illW'
+		tput sgr0; echo -n " / "
+		echo -n 'Wlist "'
+		tput sgr0; echo -n " / "
+		echo -n 'copy esc'
+		tput sgr0; echo -n " / "
+		echo -n 'terminate \'
+    echo -n '}'
+fi
+}
+
 if which git &> /dev/null ; then
 		# adding git completion and info
 		[ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
@@ -68,7 +90,7 @@ if which git &> /dev/null ; then
 		export GIT_PS1_SHOWDIRTYSTATE=1
 
 		if __git_ps1 &> /dev/null ; then
-				PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)\n\$ '
+				PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
 		fi
 
 		if which __git_wrap__git_main &> /dev/null ; then
