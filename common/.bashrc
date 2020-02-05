@@ -57,6 +57,8 @@ if which xdg-open &> /dev/null ; then
 fi
 
 if which screen &> /dev/null ; then
+  alias screenS='screen -S'
+  alias screenR='screen -R'
 __screen_info () {
 if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
     echo -n ' {C-a '
