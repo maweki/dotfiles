@@ -60,26 +60,25 @@ if which screen &> /dev/null ; then
 __screen_info () {
 if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
     echo -n ' {C-a '
-    tput bold; echo -n 'd'; tput sgr0; echo -n 'etach'
+    tput rev; echo -n 'd'; tput sgr0; echo -n 'etach'
 		tput sgr0; echo -n " / "
-    echo -n 'splitR'; tput setaf 2; echo -n '-'; tput setaf 1; echo -n '|'; tput setaf 2; echo -n ' S'; tput setaf 1; echo -n '|'
+    echo -n 'splitR'; tput setaf 2; echo -n '-'; tput setaf 1; echo -n '| '; tput rev; tput setaf 2; echo -n 'S'; tput setaf 1; echo -n '|'
 		tput sgr0; echo -n " / "
-		echo -n 'removeR X'
+		echo -n 'removeR '; tput rev; echo -n "X"
 		tput sgr0; echo -n " / "
-		tput bold; echo -n 'c'; tput sgr0; echo -n 'reateW'
+		tput rev; echo -n 'c'; tput sgr0; echo -n 'reateW'
 		tput sgr0; echo -n " / "
-		tput bold; echo -n 'k'; tput sgr0; echo -n 'illW'
+		tput rev; echo -n 'k'; tput sgr0; echo -n 'illW'
 		tput sgr0; echo -n " / "
-		echo -n 'Wlist "'
+		echo -n 'Wlist '; tput rev; echo -n '"'
 		tput sgr0; echo -n " / "
-		echo -n 'copy esc'
+		echo -n 'copy '; tput rev; echo -n 'esc'
 		tput sgr0; echo -n " / "
-		echo -n 'terminate \'
-    echo -n '}'
-else
-    __detached=$(top -b -n 1 | grep ' screen' &> /dev/null && echo -n `screen -ls | grep Detached`)
-		[ -z "${__detached}" ] || (echo -n " ["; echo -n "${__detached}"; echo -n "]")
+		echo -n 'terminate '; tput rev; echo -n '\'
+		tput sgr0; echo -n '}'
 fi
+    __detached=$(top -b -n 1 | pgrep -x screen &> /dev/null && echo -n `screen -ls | grep Detached | awk -F ' ' '{print $1}'`)
+		[ -z "${__detached}" ] || (echo -n " detached:["; echo -n "${__detached}"; echo -n "]")
 }
 else
 __screen_info () {
