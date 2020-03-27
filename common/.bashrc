@@ -108,6 +108,10 @@ if which git &> /dev/null ; then
     fi
 fi
 
+anon () {
+  PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
+  reset
+}
 export EDITOR=nano
 
 if which python3 &> /dev/null ; then
