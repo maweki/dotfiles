@@ -50,13 +50,13 @@ shopt -s globstar 2> /dev/null
 shopt -s nocaseglob;
 
 # start tmux and go from there
-#[[ -z $TMUX ]] && which tmux &> /dev/null && (exec tmux)
+#[[ -z $TMUX ]] && command -v tmux &> /dev/null && (exec tmux)
 
-if which xdg-open &> /dev/null ; then
+if command -v xdg-open &> /dev/null ; then
   alias x='xdg-open'
 fi
 
-if which screen &> /dev/null ; then
+if command -v screen &> /dev/null ; then
   alias screenS='screen -S'
   alias screenR='screen -R'
 __screen_info () {
@@ -88,7 +88,7 @@ __screen_info () {
 }
 fi
 
-if which git &> /dev/null ; then
+if command -v git &> /dev/null ; then
     # adding git completion and info
     [ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
     [ -s /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash ] && source /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash
@@ -103,7 +103,7 @@ if which git &> /dev/null ; then
         PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
     fi
 
-    if which __git_wrap__git_main &> /dev/null ; then
+    if command -v __git_wrap__git_main &> /dev/null ; then
         complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
     fi
 fi
@@ -123,7 +123,7 @@ re-tmp () {
   sudo mount -o remount,size=${1}G,noatime /tmp
 }
 
-if which python3 &> /dev/null ; then
+if command -v python3 &> /dev/null ; then
   alias pp='python3 -mjson.tool'
   alias sum='python3 -c "import sys; print(sum(int(l) for l in sys.stdin))"'
   alias sumf='python3 -c "import sys; print(sum(float(l) for l in sys.stdin))"'
@@ -134,11 +134,11 @@ if which python3 &> /dev/null ; then
   fi
 fi
 
-if which syncthing &> /dev/null ; then
+if command -v syncthing &> /dev/null ; then
     alias syncthing="syncthing -no-browser"
 fi
 
-if which stack &> /dev/null ; then
+if command -v stack &> /dev/null ; then
   eval "$(stack --bash-completion-script stack)"
 fi
 
@@ -146,11 +146,11 @@ if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
 
-if which ddgr &> /dev/null ; then
+if command -v ddgr &> /dev/null ; then
   alias websearch="ddgr --np -x"
 fi
 
-if which ffmpeg &> /dev/null ; then
+if command -v ffmpeg &> /dev/null ; then
   recode-audio () {
     for video in "$@"
     do
@@ -183,7 +183,7 @@ alias e="echo"
 alias g="git"
 
 conditional-ssh-args () {
-  if which ping &> /dev/null && which arp &> /dev/null ; then
+  if command -v ping &> /dev/null && command -v arp &> /dev/null ; then
     ping -c 1 -W 1 ${1} &> /dev/null
     if ! arp | grep -i "${2}" &> /dev/null ; then
       echo -e "-J ${3}"
@@ -218,7 +218,7 @@ PROMPT_COMMAND='history -a'
 HISTCONTROL="erasedups:ignoreboth:rawhistory"
 export HH_CONFIG=hicolor,prompt-bottom
 # if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
-if which hh &> /dev/null ; then
+if command -v hh &> /dev/null ; then
   if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
 fi
 

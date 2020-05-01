@@ -51,13 +51,13 @@ check_c "iotop --version" "iotop"
 check_c "tmux -V" "tmux"
 check_c "nethogs -V" "nethogs"
 check_c "git --version" "git"
-check_c "which git-flow" "git flow"
+check_c "command -v git-flow" "git flow"
 check_c "nano --version" "nano"
 check_c "vim --version" "vim"
 check_c "pwgen" "pwgen"
 check_c "trickle true" "trickle"
 check_c "unzip" "unzip"
-check_c "which scp" "scp"
+check_c "command -v scp" "scp"
 check_c "rsync --version" "rsync"
 check_c "curl --version" "curl"
 check_c "wget --version" "wget"
@@ -65,7 +65,7 @@ check_c "pass --version" "pass"
 check_c "hstr --version" "hstr" # https://github.com/dvorka/hstr
 check_c "googler --version" "googler" # https://github.com/jarun/googler
 check_c "ddgr --version" "ddgr" # https://github.com/jarun/ddgr
-check_c "which wtfutil" "wtfutil" # https://github.com/wtfutil/wtf/releases
+check_c "command -v wtfutil" "wtfutil" # https://github.com/wtfutil/wtf/releases
 
 echo "Python:"
 check_c "python2 --version" "python2"
@@ -81,7 +81,7 @@ check_c "joe --version" "joe (gitignore files)"
 check_c "howdoi --version" "howdoi"
 check_c "twitter --help" "twitter"
 check_c "gcalcli --version" "gcalcli" # https://github.com/insanum/gcalcli
-check_c "which hn" "haxor-news (hn)"
+check_c "command -v hn" "haxor-news (hn)"
 check_c "rtv --version" "Reddit Viewer (rtv)"
 check_d ${HOME}/.local/lib/python3.*/site-packages/dg "Dogelang (dg)"
 
@@ -142,8 +142,8 @@ check_c "git gui --version" "git gui"
 check_c "gimp --version" "GIMP"
 check_c "inkscape --version" "inkscape"
 check_c "atom --version" "Atom"
-check_c "which xpdf" "xpdf"
-check_c "which filezilla" "filezilla"
+check_c "command -v xpdf" "xpdf"
+check_c "command -v filezilla" "filezilla"
 check_c "vlc --version" "VLC"
 check_c "cvlc --version" "cVLC"
 
