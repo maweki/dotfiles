@@ -108,6 +108,11 @@ if which git &> /dev/null ; then
     fi
 fi
 
+if  ! command -v docker &> /dev/null && command -v podman &> /dev/null ; then
+  alias docker='podman'
+  alias docker-compose='podman-compose'
+fi
+
 anon () {
   PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
   reset
