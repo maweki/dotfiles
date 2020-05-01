@@ -119,6 +119,10 @@ anon () {
 }
 export EDITOR=nano
 
+re-tmp () {
+  sudo mount -o remount,size=${1}G,noatime /tmp
+}
+
 if which python3 &> /dev/null ; then
   alias pp='python3 -mjson.tool'
   alias sum='python3 -c "import sys; print(sum(int(l) for l in sys.stdin))"'
