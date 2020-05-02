@@ -182,15 +182,6 @@ alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 alias g="git"
 
-conditional-ssh-args () {
-  if command -v ping &> /dev/null && command -v arp &> /dev/null ; then
-    ping -c 1 -W 1 ${1} &> /dev/null
-    if ! arp | grep -i "${2}" &> /dev/null ; then
-      echo -e "-J ${3}"
-    fi
-  fi
-}
-
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias ssh-home='ssh -J root@mwhome.hopto.org'
 alias scp-home='scp -J root@mwhome.hopto.org'
