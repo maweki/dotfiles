@@ -89,11 +89,12 @@ __screen_info () {
 fi
 
 if command -v git &> /dev/null ; then
+    alias g="git"
+
     # adding git completion and info
     [ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
-    [ -s /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash ] && source /usr/share/doc/git-core-doc/contrib/completion/git-completion.bash
+    [ -s /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
     [ -s /etc/bash_completion.d/git-prompt ] && source /etc/bash_completion.d/git-prompt
-    [ -s /usr/share/doc/git-core-doc/contrib/completion/git-prompt.sh ] && source /usr/share/doc/git-core-doc/contrib/completion/git-prompt.sh
     [ -s /etc/bash_completion.d/git ] && source /etc/bash_completion.d/git
     [ -s /etc/bash_completion.d/git-flow-completion.bash ] && source /etc/bash_completion.d/git-flow-completion.bash
 
@@ -180,7 +181,6 @@ fi
 
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
-alias g="git"
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias ssh-home='ssh -J root@mwhome.hopto.org'
