@@ -106,9 +106,19 @@ if command -v git &> /dev/null ; then
     fi
 fi
 
-if  ! command -v docker &> /dev/null && command -v podman &> /dev/null ; then
-  alias docker='podman'
-  alias docker-compose='podman-compose'
+if command -v podman &> /dev/null ; then
+  if command -v toolbox &> /dev/null ; then
+    tb () {
+      toolbox enter -c $1
+    }
+  fi
+  if  ! command -v docker &> /dev/null ; then
+    alias docker='podman'
+    alias docker-compose='podman-compose'
+  fi
+  if  ! command -v docker-compose &> /dev/null ; then
+    alias docker-compose='podman-compose'
+  fi
 fi
 
 anon () {
