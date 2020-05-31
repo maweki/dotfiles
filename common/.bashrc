@@ -151,9 +151,7 @@ if [ -n "$UNDER_JHBUILD" ]; then
     PS1="[jhbuild] $PS1"
 fi
 
-if command -v ddgr &> /dev/null ; then
-  alias websearch="ddgr --np -x"
-fi
+alias websearch="ddgr --np -x"
 
 if command -v ffmpeg &> /dev/null ; then
   recode-audio () {
