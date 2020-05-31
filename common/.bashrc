@@ -40,11 +40,8 @@ set -o noclobber
 # Update window size after every command
 shopt -s checkwinsize
 
-# Enable the future of globbing
-shopt -s globstar
-
 # Turn on recursive globbing (enables ** to recurse all directories)
-shopt -s globstar 2> /dev/null
+shopt -s globstar
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
