@@ -137,9 +137,6 @@ if command -v python3 &> /dev/null ; then
   alias sumf='python3 -c "import sys; print(sum(float(l) for l in sys.stdin))"'
   alias tsv_to_csv='python3 -c "import sys; import csv; tabin = csv.reader(sys.stdin, dialect=csv.excel_tab); commaout = csv.writer(sys.stdout, dialect=csv.excel); list(commaout.writerow(row) for row in tabin);"'
   alias httpserver='python3 -m http.server'
-  if [ -d ${HOME}/.local/lib/python3.*/site-packages/dg ] ; then
-      alias dg="python3 -m dg"
-  fi
 fi
 
 if command -v syncthing &> /dev/null ; then
