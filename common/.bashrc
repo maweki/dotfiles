@@ -175,6 +175,12 @@ if command -v ffmpeg &> /dev/null ; then
       nice ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
     done
   }
+  animated-gif () {
+    for video in "$@"
+    do
+      ffmpeg -i "${video}" -vf "fps=24,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 "${video}.gif"
+    done
+  }
 fi
 
 if [ ! -f /sbin/clusterctrl ]; then
