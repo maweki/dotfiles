@@ -1,9 +1,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-${DIR}/make.sh
+. ${DIR}/make.sh
 
 sudo dnf install -y \
-  pandoc \
   texlive \
   texlive-biblatex \
   texlive-pgfplots \
