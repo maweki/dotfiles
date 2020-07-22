@@ -1,0 +1,21 @@
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+${DIR}/make.sh
+
+sudo dnf install -y \
+  pandoc \
+  texlive \
+  texlive-biblatex \
+  texlive-pgfplots \
+  texlive-esvect \
+  texlive-collection-langenglish \
+  texlive-collection-langgerman \
+  texlive-hyphen-english \
+  texlive-hyphen-german \
+  texlive-lipsum \
+  texlive-algorithmicx \
+  texlive-fixmetodonotes \
+  texlive-acronym \
+  texlive-classicthesis \
+  texlive-wrapfig \
+  texlive-ifsym
