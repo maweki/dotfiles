@@ -112,6 +112,9 @@ if command -v podman &> /dev/null ; then
     alias tb-list='toolbox list'
     alias tb-create='toolbox create -c'
     alias tb-remove='toolbox rm'
+    tb-stop () {
+      podman stop `toolbox list | grep running | grep " ${1} " | cut -c -12`
+    }
   fi
   if  ! command -v docker &> /dev/null ; then
     alias docker='podman'
