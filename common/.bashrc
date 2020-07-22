@@ -111,6 +111,7 @@ if command -v podman &> /dev/null ; then
     alias tb='toolbox enter -c'
     alias tb-list='toolbox list'
     alias tb-create='toolbox create -c'
+    alias tb-remove='toolbox rm'
   fi
   if  ! command -v docker &> /dev/null ; then
     alias docker='podman'
