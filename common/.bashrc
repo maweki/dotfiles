@@ -125,6 +125,9 @@ if command -v podman &> /dev/null ; then
   fi
 fi
 
+# disable container tracking https://github.com/containers/toolbox/issues/218
+printf "\033]777;container;pop;;\033\\"
+
 anon () {
   PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
   reset
