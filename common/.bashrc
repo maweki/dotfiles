@@ -125,6 +125,12 @@ if command -v podman &> /dev/null ; then
   fi
 fi
 
+if command -v flatpak &> /dev/null ; then
+  if ! command -v atom && (flatpak list | grep io.atom.Atom &> /dev/null) ; then
+    alias atom='flatpak run io.atom.Atom'
+  fi
+fi
+
 anon () {
   PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
   reset
