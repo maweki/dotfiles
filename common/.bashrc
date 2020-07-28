@@ -128,6 +128,12 @@ fi
 # disable container tracking https://github.com/containers/toolbox/issues/218
 printf "\033]777;container;pop;;\033\\"
 
+if command -v flatpak &> /dev/null ; then
+  if ! command -v atom && (flatpak list | grep io.atom.Atom &> /dev/null) ; then
+    alias atom='flatpak run io.atom.Atom'
+  fi
+fi
+
 anon () {
   PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
   reset
