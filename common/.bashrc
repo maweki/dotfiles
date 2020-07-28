@@ -128,8 +128,12 @@ if command -v podman &> /dev/null ; then
 fi
 
 if command -v flatpak &> /dev/null ; then
-  if ! command -v atom && (flatpak list | grep io.atom.Atom &> /dev/null) ; then
+  fplist=`flatpak list --app --columns=application`
+  if ! command -v atom &> /dev/null && (echo "${fplist}" | grep io.atom.Atom &> /dev/null) ; then
     alias atom='flatpak run io.atom.Atom'
+  fi
+  if ! command -v libreoffice &> /dev/null && (echo "${fplist}" | grep org.libreoffice.LibreOffice &> /dev/null) ; then
+    alias libreoffice='flatpak run org.libreoffice.LibreOffice'
   fi
 fi
 
