@@ -139,8 +139,6 @@ if command -v podman &> /dev/null ; then
   if  ! command -v docker-compose &> /dev/null ; then
     alias docker-compose='podman-compose'
   fi
-  # disable container tracking https://github.com/containers/toolbox/issues/218
-  printf "\033]777;container;pop;;\033\\"
 fi
 
 if command -v flatpak &> /dev/null ; then
@@ -283,6 +281,9 @@ if [[ $- == *i* ]] ; then # If shell is interactive
 
   # Immediately add a trailing slash when autocompleting symlinks to directories
   bind "set mark-symlinked-directories on"
+
+  # disable container tracking https://github.com/containers/toolbox/issues/218
+  printf "\033]777;container;pop;;\033\\"
 fi
 
 # color everything
