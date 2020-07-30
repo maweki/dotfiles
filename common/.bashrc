@@ -115,6 +115,13 @@ if command -v podman &> /dev/null ; then
     tb-stop () {
       podman stop `toolbox list | grep running | grep " ${1} " | cut -c -12`
     }
+    tb-run () {
+      if [ $# -eq 1 ] ; then
+        toolbox run -c $1 $1
+      else
+        toolbox run -c $@
+      fi
+    }
   fi
   if  ! command -v docker &> /dev/null ; then
     alias docker='podman'
