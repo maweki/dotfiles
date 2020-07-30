@@ -110,7 +110,16 @@ if command -v podman &> /dev/null ; then
   if command -v toolbox &> /dev/null ; then
     alias tb='toolbox enter -c'
     alias tb-list='toolbox list'
-    alias tb-create='toolbox create -c'
+    tb-create () {
+      if [ $# -eq 1 ] ; then
+        toolbox create -c $1
+      else
+        toolbox create -c $1 && toolbox run -c $1 ${@:2}
+      fi
+    }
+    tb-create-with-command () {
+      tb-create $@ && echo "source ~/.bashrc && tb-run $1" > ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
+    }
     alias tb-remove='toolbox rm'
     tb-stop () {
       podman stop `toolbox list | grep running | grep " ${1} " | cut -c -12`
