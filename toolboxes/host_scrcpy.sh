@@ -22,3 +22,5 @@ source ~/.bashrc
 meson x --buildtype release --strip -Db_lto=true
 ninja -Cx
 sudo ninja -Cx install
+cd /tmp
+rm -rf /tmp/scrcpy
