@@ -112,9 +112,9 @@ if command -v podman &> /dev/null ; then
     alias tb-list='toolbox list'
     tb-create () {
       if [ $# -eq 1 ] ; then
-        toolbox create -c $1
+        toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb
       else
-        toolbox create -c $1 && toolbox run -c $1 ${@:2}
+        toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb && toolbox run -c $1 ${@:2}
       fi
     }
     tb-create-with-command () {
