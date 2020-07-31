@@ -114,15 +114,22 @@ if command -v podman &> /dev/null ; then
       if [ $# -eq 1 ] ; then
         toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb
       else
-        toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb && toolbox run -c $1 ${@:2}
+        tb-create $1 && tb-run $1 ${@:2}
       fi
     }
     tb-create-with-command () {
       tb-create $@ && echo "source ~/.bashrc && tb-run $1" > ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
     }
-    alias tb-remove='toolbox rm'
+    tb-remove () {
+      for tb in "$@" ; do
+        tb-stop $tb
+        toolbox rm $tb
+      done
+    }
     tb-stop () {
-      podman stop `toolbox list | grep running | grep " ${1} " | cut -c -12`
+      for tb in "$@" ; do
+        podman stop `toolbox list | grep running | grep " ${tb} " | cut -c -12`
+      done
     }
     tb-run () {
       if [ $# -eq 1 ] ; then
