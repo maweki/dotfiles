@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #https://github.com/Genymobile/scrcpy/blob/master/BUILD.md
+VERSION="1.16"
 
 # enable RPM fusion free
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -15,7 +16,7 @@ sudo dnf install -y java-devel
 sudo dnf install -y android-tools mesa-dri-drivers
 
 cd /tmp
-git clone https://github.com/Genymobile/scrcpy
+git clone -b v${VERSION} https://github.com/Genymobile/scrcpy
 cd scrcpy
 
 source ~/.bashrc

@@ -6,3 +6,12 @@ Here are a few initialization scripts for toolboxes.
 * `dev` prefix composes a build/dev environment
 * `dep` prefix for common dependency sets.
 * `host` prefix for commands that are hosted inside a container because of dynamically linked dependencies
+
+
+
+Here is a list of commands to install stuff:
+
+```
+tb-create-with-command scrcpy scrcpy ~/dotfiles/toolboxes/host_scrcpy.sh
+tb-create-with-command atom "atom -f" ~/dotfiles/toolboxes/host_atom.sh
+```
