@@ -4,11 +4,12 @@ gist-it
 git-blame
 git-history
 git-plus
-linter
+linter-ui-default
 linter-jshint
 linter-pylint
+intentions
+busy-signal
 minimap
-minimap-color-highlight
 minimap-selection
 pain-split
 regex-railroad-diagram
@@ -18,3 +19,5 @@ latexer
 language-prolog
 language-restructuredtext
 language-haskell
+atom-ide-ui
+ide-haskell-hie
