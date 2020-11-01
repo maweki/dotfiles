@@ -115,6 +115,13 @@ if command -v podman &> /dev/null ; then
   if command -v toolbox &> /dev/null ; then
     alias tb='toolbox enter -c'
     alias tb-list='toolbox list'
+    tb-help () {
+      echo "tb-create CONTAINERNAME [INIT COMMAND]"
+      echo "tb-create-with-command CONTAINERNAME CONTAINERCOMMAND [INIT COMMAND]"
+      echo "tb-remove CONTAINER [CONTAINER ...]"
+      echo "tb-stop CONTAINER [CONTAINER ...]"
+      echo "tb-run CONTAINER [CMD=CONTAINER]"
+    }
     tb-create () {
       if [ $# -eq 1 ] ; then
         toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb
