@@ -20,7 +20,12 @@ if [ -d ${HOME}/.local/android/sdk ] ; then
     export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
 fi
 
-export PATH=$HOME/.local/bin:$PATH
+if [ "${container}" = "podman" ] ; then
+  # prefer "system" installation from the container
+  export PATH=$PATH:$HOME/.local/bin
+else
+  export PATH=$HOME/.local/bin:$PATH
+fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 
 
