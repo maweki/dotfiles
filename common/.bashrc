@@ -154,13 +154,20 @@ if command -v podman &> /dev/null ; then
 fi
 
 if command -v flatpak &> /dev/null ; then
+  declare -A fpapps
+  fpapps[atom]=io.atom.Atom
+  fpapps[eog]=org.gnome.eog
+  fpapps[evince]=org.gnome.Evince
+  fpapps[gedit]=org.gnome.gedit
+  fpapps[libreoffice]=org.libreoffice.LibreOffice
+  fpapps[vlc]=org.videolan.VLC
+  fpapps[zotero]=org.zotero.Zotero
   fplist=`flatpak list --app --columns=application`
-  if ! command -v atom &> /dev/null && (echo "${fplist}" | grep io.atom.Atom &> /dev/null) ; then
-    alias atom='flatpak run io.atom.Atom'
-  fi
-  if ! command -v libreoffice &> /dev/null && (echo "${fplist}" | grep org.libreoffice.LibreOffice &> /dev/null) ; then
-    alias libreoffice='flatpak run org.libreoffice.LibreOffice'
-  fi
+  for fpcmd in "${!fpapps[@]}"; do
+    if ! command -v ${fpcmd} &> /dev/null && (echo "${fplist}" | grep ${fpapps[${fpcmd}]} &> /dev/null) ; then
+      alias ${fpcmd}="flatpak run ${fpapps[${fpcmd}]}"
+    fi
+  done
 fi
 
 anon () {
