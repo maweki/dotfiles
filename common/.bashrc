@@ -123,7 +123,7 @@ if command -v podman &> /dev/null ; then
       fi
     }
     tb-create-with-command () {
-      tb-create $@ && echo "source ~/.bashrc && tb-run $1" > ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
+      tb-create $@ && echo "source ~/.bashrc && tb-run $1 $2 \$@" >| ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
     }
     tb-remove () {
       for tb in "$@" ; do
