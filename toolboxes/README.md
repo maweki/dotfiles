@@ -14,4 +14,6 @@ Here is a list of commands to install stuff:
 ```
 tb-create-with-command scrcpy scrcpy ~/dotfiles/toolboxes/host_scrcpy.sh
 tb-create-with-command atom "atom -f" ~/dotfiles/toolboxes/host_atom.sh
+
+tb-run-tmp ~/dotfiles/toolboxes/build_silicon.sh
 ```

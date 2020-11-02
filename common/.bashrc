@@ -114,13 +114,17 @@ fi
 if command -v podman &> /dev/null ; then
   if command -v toolbox &> /dev/null ; then
     alias tb='toolbox enter -c'
+    alias tb-ls='toolbox list'
     alias tb-list='toolbox list'
     tb-help () {
+      echo "tb CONTAINERNAME"
       echo "tb-create CONTAINERNAME [INIT COMMAND]"
       echo "tb-create-with-command CONTAINERNAME CONTAINERCOMMAND [INIT COMMAND]"
+      echo "tb-list"
       echo "tb-remove CONTAINER [CONTAINER ...]"
-      echo "tb-stop CONTAINER [CONTAINER ...]"
       echo "tb-run CONTAINER [CMD=CONTAINER]"
+      echo "tb-run-tmp CMD"
+      echo "tb-stop CONTAINER [CONTAINER ...]"
     }
     tb-create () {
       if [ $# -eq 1 ] ; then
@@ -130,7 +134,7 @@ if command -v podman &> /dev/null ; then
       fi
     }
     tb-create-with-command () {
-      tb-create $@ && echo "source ~/.bashrc && tb-run $1 $2 \$@" >| ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
+      tb-create $1 ${@:3} && echo "source ~/.bashrc && tb-run $1 $2 \$@" >| ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
     }
     tb-remove () {
       for tb in "$@" ; do
@@ -140,7 +144,7 @@ if command -v podman &> /dev/null ; then
     }
     tb-stop () {
       for tb in "$@" ; do
-        podman stop `toolbox list | grep running | grep " ${tb} " | cut -c -12`
+        podman stop `toolbox list | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | grep running | grep " ${tb} " | cut -c -12`
       done
     }
     tb-run () {
@@ -149,6 +153,11 @@ if command -v podman &> /dev/null ; then
       else
         toolbox run -c $@
       fi
+    }
+    tb-run-tmp () {
+      tmpname=`echo -n tmpcont${RANDOM}`
+      tb-create ${tmpname} && tb-run ${tmpname} ${@}
+      tb-remove ${tmpname}
     }
   fi
   if  ! command -v docker &> /dev/null ; then
