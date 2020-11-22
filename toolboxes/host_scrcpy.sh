@@ -15,14 +15,14 @@ sudo dnf install -y java-devel
 # android tools and graphics driver
 sudo dnf install -y android-tools mesa-dri-drivers
 
-cd /tmp
-git clone -b v${VERSION} https://github.com/Genymobile/scrcpy
-cd scrcpy
+SRCDIR=`mktemp -d`
+git clone -b v${VERSION} https://github.com/Genymobile/scrcpy ${SRCDIR}
+cd ${SRCDIR}
 
 source ~/.bashrc
 meson x --buildtype release --strip -Db_lto=true
 ninja -Cx
 sudo ninja -Cx install
 cd /tmp
-rm -rf /tmp/scrcpy
+rm -rf ${SRCDIR}
 sudo dnf clean all

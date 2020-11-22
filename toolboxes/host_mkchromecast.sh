@@ -22,6 +22,6 @@ cd ${SRCDIR}
 sudo pip install -r requirements.txt
 sudo pip install .
 
-cd
+cd /tmp
 sudo dnf clean all
 rm -rf ${SRCDIR}
