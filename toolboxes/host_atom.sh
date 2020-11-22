@@ -16,3 +16,4 @@ stack ./install.hs hie
 cd ${DIR}
 cd ..
 apm install --packages-file apm-packages
+sudo dnf clean all

@@ -13,3 +13,4 @@ sudo dnf install -y \
   libxcb-devel
 
 cargo install silicon
+sudo dnf clean all

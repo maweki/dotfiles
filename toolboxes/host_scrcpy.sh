@@ -25,3 +25,4 @@ ninja -Cx
 sudo ninja -Cx install
 cd /tmp
 rm -rf /tmp/scrcpy
+sudo dnf clean all
