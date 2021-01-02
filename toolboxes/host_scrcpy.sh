@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #https://github.com/Genymobile/scrcpy/blob/master/BUILD.md
-VERSION="1.16"
+VERSION="1.17"
 
 # enable RPM fusion free
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
