@@ -18,4 +18,5 @@ sudo dnf install -y \
   texlive-classicthesis \
   texlive-wrapfig \
   texlive-ifsym \
+  texlive-noindentafter \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de
