@@ -266,10 +266,19 @@ complete -F _known_hosts issh
 complete -F _known_hosts ssh-home
 complete -F _known_hosts ssh-work
 
-export NVM_DIR="${HOME}/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+\. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+else
+  nvm-install () {
+    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+    pushd "$NVM_DIR" && \
+    git fetch --tags && \
+    git checkout `git tag -l --sort=taggerdate | tail -1` && \
+    popd
+  }
+fi
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 # Save multi-line commands as one command
