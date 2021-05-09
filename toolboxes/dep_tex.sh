@@ -20,4 +20,5 @@ sudo dnf install -y \
   texlive-ifsym \
   texlive-noindentafter \
   texlive-stmaryrd \
+  texlive-textualicomma \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de
