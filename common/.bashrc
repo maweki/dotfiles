@@ -109,6 +109,10 @@ if command -v git &> /dev/null ; then
     if command -v __git_wrap__git_main &> /dev/null ; then
         complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
     fi
+
+    gitstashpullpop () {
+      g stash && g pullr && g stash pop
+    }
 fi
 
 if command -v podman &> /dev/null ; then
