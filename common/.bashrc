@@ -111,7 +111,7 @@ if command -v git &> /dev/null ; then
     fi
 
     gitstashpullpop () {
-      g stash && g pullr && g stash pop
+      git stash && git pullr && git stash pop
     }
 fi
 
