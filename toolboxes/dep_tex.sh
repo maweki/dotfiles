@@ -21,5 +21,6 @@ sudo dnf install -y \
   texlive-noindentafter \
   texlive-stmaryrd \
   texlive-textualicomma \
+  texlive-thmtools \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz
