@@ -5,5 +5,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 . ${DIR}/dep_tex.sh
 
 sudo dnf install -y \
-  pandoc
+  pandoc \
+  entr
 sudo dnf clean all
