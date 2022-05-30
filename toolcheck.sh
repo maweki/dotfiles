@@ -63,6 +63,7 @@ check_c "rsync --version" "rsync"
 check_c "curl --version" "curl"
 check_c "wget --version" "wget"
 check_c "pass --version" "pass"
+check_c "command -v entr" "entr" # https://eradman.com/entrproject/
 check_c "hstr --version" "hstr" # https://github.com/dvorka/hstr
 check_c "googler --version" "googler" # https://github.com/jarun/googler
 check_c "ddgr --version" "ddgr" # https://github.com/jarun/ddgr
@@ -138,6 +139,7 @@ check_c "latex --version" "latex"
 check_c "latexmk --version" "latexmk"
 
 echo "GUI:"
+check_c "tig --version" "tig"
 check_c "gitg --version" "gitg"
 check_c "git gui --version" "git gui"
 check_c "gimp --version" "GIMP"
@@ -150,3 +152,4 @@ check_c "cvlc --version" "cVLC"
 
 echo "Other:"
 check_c "dot -V" "dot (GraphViz)"
+check_c "ffmpeg -version" "ffmpeg"
