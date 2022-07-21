@@ -8,7 +8,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 sudo dnf install -y \
   freetype freetype-devel \
   cargo \
-  expat expat-devel \
+  expat.x86_64 expat-devel.x86_64 \
   libxcb-devel
 
 cargo install silicon
