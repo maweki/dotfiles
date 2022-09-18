@@ -22,5 +22,8 @@ sudo dnf install -y \
   texlive-stmaryrd \
   texlive-textualicomma \
   texlive-thmtools \
+  texlive-ccicons \
+  texlive-cleveref \
+  texlive-cancel \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz
