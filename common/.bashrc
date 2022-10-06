@@ -227,27 +227,27 @@ if command -v ffmpeg &> /dev/null ; then
     for video in "$@"
     do
       extension="${video##*.}"
-      ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vcodec copy -c:s mov_text "${video}.newaudio.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.newaudio.${extension}" "${video}"
+      ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vcodec copy -c:s mov_text "${video}.newaudio.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.newaudio.${extension}" "${video}"
     done
   }
   recode-720p () {
     for video in "$@"
     do
       extension="${video##*.}"
-      nice ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.720p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.720p.${extension}" "${video}"
+      nice ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.720p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.720p.${extension}" "${video}"
     done
   }
   recode-1080p () {
     for video in "$@"
     do
       extension="${video##*.}"
-      nice ffmpeg -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
+      nice ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
     done
   }
   animated-gif () {
     for video in "$@"
     do
-      ffmpeg -i "${video}" -vf "fps=24,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 "${video}.gif"
+      ffmpeg -nostdin -i "${video}" -vf "fps=24,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 "${video}.gif"
     done
   }
 fi
