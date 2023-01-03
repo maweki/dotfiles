@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #https://github.com/Genymobile/scrcpy/blob/master/BUILD.md
-VERSION="1.24"
+VERSION="1.25"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # cmake dependency
