@@ -262,8 +262,6 @@ alias e="echo"
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias ssh-home='ssh -J root@mwhome.hopto.org'
 alias scp-home='scp -J root@mwhome.hopto.org'
-alias ssh-atl='ssh -J root@wm2.no-ip.info:8022'
-alias scp-atl='scp -J root@wm2.no-ip.info:8022'
 alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
 alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 complete -F _known_hosts issh
