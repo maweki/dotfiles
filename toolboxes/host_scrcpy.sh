@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #https://github.com/Genymobile/scrcpy/blob/master/BUILD.md
-VERSION="1.25"
+VERSION="2.0"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # cmake dependency
@@ -11,7 +11,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
 # client build dependencies
-sudo dnf install -y SDL2-devel ffms2-devel meson gcc libusb-devel
+sudo dnf install -y SDL2-devel ffms2-devel meson gcc libusb1-devel ninja-build
 
 # server build dependencies
 sudo dnf install -y java-devel
