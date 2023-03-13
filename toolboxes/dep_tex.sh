@@ -4,18 +4,17 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 sudo dnf install -y \
   texlive \
-  texlive-biblatex \
+  texlive-biblatex texlive-biblatex-lni\
   texlive-pgfplots \
   texlive-esvect \
-  texlive-collection-langenglish \
-  texlive-collection-langgerman \
-  texlive-hyphen-english \
-  texlive-hyphen-german \
+  texlive-multirow \
+  texlive-collection-langenglish texlive-hyphen-english \
+  texlive-collection-langgerman texlive-hyphen-german \
   texlive-lipsum \
-  texlive-algorithmicx \
+  texlive-algorithmicx texlive-minted \
   texlive-fixmetodonotes \
   texlive-acronym \
-  texlive-classicthesis \
+  texlive-classicthesis texlive-lni \
   texlive-wrapfig \
   texlive-ifsym \
   texlive-noindentafter \
@@ -25,5 +24,6 @@ sudo dnf install -y \
   texlive-ccicons \
   texlive-cleveref \
   texlive-cancel \
+  texlive-newtxtt \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz
