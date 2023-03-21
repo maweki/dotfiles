@@ -20,7 +20,7 @@ if [ -d ${HOME}/.local/android/sdk ] ; then
     export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
 fi
 
-if [ "${container}" = "podman" ] ; then
+if [[ "${container}" = "podman" || "${container}" = "oci" ]] ; then
   # prefer "system" installation from the container
   export PATH=$PATH:$HOME/.local/bin
 else
