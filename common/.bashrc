@@ -23,6 +23,7 @@ fi
 if [[ "${container}" = "podman" || "${container}" = "oci" ]] ; then
   # prefer "system" installation from the container
   export PATH=$PATH:$HOME/.local/bin
+  [ -f /etc/hostname.toolbox ] && sudo hostname -F /etc/hostname.toolbox
 else
   export PATH=$HOME/.local/bin:$PATH
 fi
@@ -132,7 +133,9 @@ if command -v podman &> /dev/null ; then
     }
     tb-create () {
       if [ $# -eq 1 ] ; then
-        toolbox create -c $1 && toolbox run -c $1 sudo hostname ${1}-tb
+        hfile=`mktemp`
+        echo ${1}-tb >| ${hfile}
+        toolbox create -c ${1} && toolbox run -c ${1} sudo hostname ${1}-tb && toolbox run -c ${1} sudo mv ${hfile} /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chmod 644 /etc/hostname.toolbox
       else
         tb-create $1 && tb-run $1 ${@:2}
       fi
