@@ -263,9 +263,9 @@ alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 
 alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-alias ssh-home='ssh -J root@mwhome.hopto.org'
-alias scp-home='scp -J root@mwhome.hopto.org'
-alias socks-home='ssh -TND 1080 root@mwhome.hopto.org'
+alias ssh-home='ssh -J root@home.maweki.de'
+alias scp-home='scp -J root@home.maweki.de'
+alias socks-home='ssh -TND 1080 root@home.maweki.de'
 alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
 alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 alias socks-work='ssh -TND 1080 dbs1.informatik.uni-halle.de'
