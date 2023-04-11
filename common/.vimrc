@@ -24,6 +24,8 @@ set list
 
 syntax on
 set smartindent
+set number
+set norelativenumber
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -55,10 +57,14 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 call plug#begin()
+Plug 'gioele/vim-autoswap'
 Plug 'tpope/vim-sensible'
-Plug 'airblade/vim-gitgutter' 
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-latex/vim-latex'
+Plug 'thaerkh/vim-workspace'
 call plug#end()
-
