@@ -34,7 +34,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HOME}/.local/lib
 #export TZ="Europe/Berlin"
 
 # colorful terminal with results color
-PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
+PS1='`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH] "`\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
 
 # prevent ctrl+s from keeping on freezing because I can never remember ctrl+q
 stty ixany
@@ -104,7 +104,7 @@ if command -v git &> /dev/null ; then
     export GIT_PS1_SHOWDIRTYSTATE=1
 
     if __git_ps1 &> /dev/null ; then
-        PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
+        PS1='`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH]"`\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
     fi
 
     if command -v __git_wrap__git_main &> /dev/null ; then
