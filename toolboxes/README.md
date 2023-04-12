@@ -13,7 +13,6 @@ Here is a list of commands to install stuff:
 
 ```
 tb-create-with-command scrcpy scrcpy ~/dotfiles/toolboxes/host_scrcpy.sh
-tb-create-with-command atom "atom -f" ~/dotfiles/toolboxes/host_atom.sh
 tb-create-with-command mkchromecast mkchromecast ~/dotfiles/toolboxes/host_mkchromecast.sh
 tb-create-with-command Zettlr Zettlr ~/dotfiles/toolboxes/host_zettlr.sh
 
