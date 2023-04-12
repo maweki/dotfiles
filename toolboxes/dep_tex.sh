@@ -7,6 +7,7 @@ sudo dnf install -y \
   texlive-biblatex texlive-biblatex-lni\
   texlive-pgfplots \
   texlive-esvect \
+  texlive-pict2e texlive-xypic \
   texlive-multirow \
   texlive-collection-langenglish texlive-hyphen-english \
   texlive-collection-langgerman texlive-hyphen-german \
