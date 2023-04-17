@@ -70,4 +70,5 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-latex/vim-latex'
 Plug 'thaerkh/vim-workspace'
 Plug 'thaerkh/vim-indentguides'
+Plug 'ntpeters/vim-better-whitespace'
 call plug#end()
