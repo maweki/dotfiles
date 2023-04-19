@@ -6,6 +6,7 @@ sudo dnf install -y \
   texlive \
   texlive-biblatex texlive-biblatex-lni\
   texlive-pgfplots \
+  texlive-amscdx \
   texlive-esvect \
   texlive-pict2e texlive-xypic \
   texlive-multirow \
@@ -25,6 +26,7 @@ sudo dnf install -y \
   texlive-ccicons \
   texlive-cleveref texlive-uri \
   texlive-cancel \
-  texlive-newtxtt \
+  texlive-newtxtt texlive-txfonts \
+  texlive-bookmark \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz
