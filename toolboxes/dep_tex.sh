@@ -23,7 +23,7 @@ sudo dnf install -y \
   texlive-textualicomma \
   texlive-thmtools \
   texlive-ccicons \
-  texlive-cleveref \
+  texlive-cleveref texlive-uri \
   texlive-cancel \
   texlive-newtxtt \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
