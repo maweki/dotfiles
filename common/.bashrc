@@ -286,21 +286,22 @@ else
     popd
   }
 fi
-# When the shell exits, append to the history file instead of overwriting it
-shopt -s histappend
+
 # Save multi-line commands as one command
 shopt -s cmdhist
-HISTSIZE=500000
-HISTFILESIZE=100000
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
-PROMPT_COMMAND='history -a'
-# Avoid duplicate entries
-HISTCONTROL="erasedups:ignoreboth:rawhistory"
-export HH_CONFIG=hicolor,prompt-bottom
-# if this is interactive shell, then bind hh to Ctrl-r (for Vi mode check doc)
-if command -v hh &> /dev/null ; then
-  if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hh -- \C-j"'; fi
-fi
+alias hh=hstr                    # hh to be alias for hstr
+export HSTR_CONFIG=hicolor       # get more colors
+shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=100000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+# ensure synchronization between bash memory and history file
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+# if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+
 
 # Use standard ISO 8601 timestamp
 # %F equivalent to %Y-%m-%d
