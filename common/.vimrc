@@ -61,6 +61,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 call plug#begin()
 Plug 'gioele/vim-autoswap'
 Plug 'tpope/vim-sensible'
+Plug 'matze/vim-move'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
