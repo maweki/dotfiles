@@ -266,6 +266,8 @@ alias issh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias ssh-home='ssh -J root@home.maweki.de'
 alias scp-home='scp -J root@home.maweki.de'
 alias socks-home='ssh -TND 1080 root@home.maweki.de'
+alias ssh-garten='ssh -p 10022 root@maweki.de'
+alias socks-garten='ssh -p 10022 -TND 1080 root@maweki.de'
 alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
 alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 alias socks-work='ssh -TND 1080 dbs1.informatik.uni-halle.de'
