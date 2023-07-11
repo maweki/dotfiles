@@ -9,6 +9,8 @@ sudo dnf install -y \
   freetype freetype-devel \
   cargo \
   expat.x86_64 expat-devel.x86_64 \
+  fontconfig-devel freetype-devel libxml2-devel \
+  harfbuzz \
   libxcb-devel
 
 cargo install silicon
