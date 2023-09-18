@@ -21,6 +21,7 @@ do
 	target=${targetdir}${targetname}
 	if [ ! -f "${target}" ]
 	then
+		mkdir -p "${targetdir}"
 		adb pull -a "storage/self/primary/DCIM/Camera/${f}" "${target}" &> /dev/null
 	fi
 done
