@@ -19,7 +19,7 @@ sudo dnf install -y \
   texlive-acronym \
   texlive-classicthesis texlive-lni \
   texlive-wrapfig \
-  texlive-ifsym texlive-wasysym \
+  texlive-ifsym texlive-wasysym texlive-wasy \
   texlive-siunitx \
   texlive-mwe \
   texlive-noindentafter \
