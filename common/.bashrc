@@ -253,6 +253,12 @@ if command -v ffmpeg &> /dev/null ; then
       ffmpeg -nostdin -i "${video}" -vf "fps=24,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop -1 "${video}.gif"
     done
   }
+  recode-mp3 () {
+    for video in "$@"
+    do
+      ffmpeg -nostdin -i "${video}" -b:a 192K -vn "${video}.mp3"
+    done
+  }
 fi
 
 if [ ! -f /sbin/clusterctrl ]; then
