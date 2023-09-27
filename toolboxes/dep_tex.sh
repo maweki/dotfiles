@@ -14,6 +14,7 @@ sudo dnf install -y \
   texlive-collection-langgerman texlive-hyphen-german \
   texlive-lipsum texlive-blindtext \
   texlive-algorithmicx texlive-minted \
+  texlive-appendixnumberbeamer \
   texlive-fixmetodonotes \
   texlive-acronym \
   texlive-classicthesis texlive-lni \
