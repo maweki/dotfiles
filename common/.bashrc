@@ -116,6 +116,11 @@ if command -v git &> /dev/null ; then
     }
 fi
 
+if command -v nq /dev/null ; then
+  mkdir -p /tmp/nq &> /dev/null
+  export NQDIR=/tmp/nq
+done
+
 if command -v podman &> /dev/null ; then
   if command -v toolbox &> /dev/null ; then
     alias tb='toolbox enter -c'
