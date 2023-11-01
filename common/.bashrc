@@ -116,10 +116,12 @@ if command -v git &> /dev/null ; then
     }
 fi
 
-if command -v nq /dev/null ; then
+if command -v nq &> /dev/null ; then
   mkdir -p /tmp/nq &> /dev/null
   export NQDIR=/tmp/nq
-done
+else
+  alias nq=""
+fi
 
 if command -v podman &> /dev/null ; then
   if command -v toolbox &> /dev/null ; then
