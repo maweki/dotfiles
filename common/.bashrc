@@ -119,8 +119,10 @@ fi
 if command -v nq &> /dev/null ; then
   mkdir -p /tmp/nq &> /dev/null
   export NQDIR=/tmp/nq
-else
-  alias nq=""
+  alias q=nq
+fi
+if command -v tsp &> /dev/null ; then
+  alias q=tsp
 fi
 
 if command -v podman &> /dev/null ; then
