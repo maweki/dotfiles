@@ -183,6 +183,13 @@ if command -v podman &> /dev/null ; then
   fi
 fi
 
+if ( command -v chrt && chrt -m | grep SCHED_IDLE | grep "0/0" ) &> /dev/null ; then
+  lowprio="chrt -i 0"
+else
+  lowprio="nice"
+fi
+alias lowprio=$lowprio
+
 if command -v flatpak &> /dev/null ; then
   declare -A fpapps
   fpapps[atom]=io.atom.Atom
@@ -244,14 +251,14 @@ if command -v ffmpeg &> /dev/null ; then
     for video in "$@"
     do
       extension="${video##*.}"
-      nice ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.720p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.720p.${extension}" "${video}"
+      lowprio ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1280:720 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.720p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.720p.${extension}" "${video}"
     done
   }
   recode-1080p () {
     for video in "$@"
     do
       extension="${video##*.}"
-      nice ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
+      lowprio ffmpeg -nostdin -i "${video}" -max_muxing_queue_size 9999 -vf scale=1920:1080 -c:v libx264 -crf 20 -preset slow -c:s copy -c:a copy "${video}.1080p.${extension}" && mv "${video}" "${video}.bak" && mv "${video}.1080p.${extension}" "${video}"
     done
   }
   animated-gif () {
