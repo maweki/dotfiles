@@ -275,10 +275,6 @@ if command -v ffmpeg &> /dev/null ; then
   }
 fi
 
-if [ ! -f /sbin/clusterctrl ]; then
-    alias clusterctrl='ssh cnat.local /sbin/clusterctrl'
-fi
-
 alias remove_trailing_spaces="sed --in-place 's/[[:space:]]\+$//'"
 alias e="echo"
 
