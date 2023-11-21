@@ -381,22 +381,6 @@ alias zgrep='zgrep --color=auto'
 # bash-completion for sudo
 complete -cf sudo
 
-# >>> conda init >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(CONDA_REPORT_ERRORS=false '~/.local/anaconda3/bin/conda' shell.bash hook 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    \eval "$__conda_setup"
-else
-    if [ -f "~/.local/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "~/.local/anaconda3/etc/profile.d/conda.sh"
-        CONDA_CHANGEPS1=false conda activate base
-    else
-        \export PATH="~/.local/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda init <<<
-
 ###-tns-completion-start-###
 if [ -f /home/maweki/.tnsrc ]; then
     source /home/maweki/.tnsrc
