@@ -186,7 +186,7 @@ if command -v podman &> /dev/null ; then
 fi
 
 if ( command -v chrt && chrt -m | grep SCHED_IDLE | grep "0/0" ) &> /dev/null ; then
-  lowprio="chrt -i 0"
+  lowprio="ionice -c3 -t chrt -i 0"
 else
   lowprio="nice"
 fi
