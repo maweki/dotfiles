@@ -31,6 +31,7 @@ sudo dnf install -y \
   texlive-cancel \
   texlive-newtxtt texlive-txfonts \
   texlive-bookmark \
+  texlive-fontawesome5.noarch \
   texlive-ecltree texlive-eepic \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz \
