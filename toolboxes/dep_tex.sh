@@ -33,4 +33,5 @@ sudo dnf install -y \
   texlive-bookmark \
   texlive-ecltree texlive-eepic \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
-  texlive-dot2texi dot2tex graphviz
+  texlive-dot2texi dot2tex graphviz \
+  texstudio
