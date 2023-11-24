@@ -1,3 +1,4 @@
+#! /bin/bash
 # .bashrc
 
 # Source global definitions
@@ -7,15 +8,15 @@ fi
 
 # User specific environment and startup programs
 
-if [ -d $HOME/.cabal/bin ] ; then
+if [ -d "${HOME}/.cabal/bin" ] ; then
   PATH=$HOME/.cabal/bin:$PATH
 fi
 
-if [ -d $HOME/.cargo/bin ] ; then
+if [ -d "${HOME}/.cargo/bin" ] ; then
   PATH=$HOME/.cargo/bin:$PATH
 fi
 
-if [ -d ${HOME}/.local/android/sdk ] ; then
+if [ -d "${HOME}/.local/android/sdk" ] ; then
     export ANDROID_HOME=${HOME}/.local/android/sdk
     export PATH="${PATH}:${ANDROID_HOME}tools/:${ANDROID_HOME}platform-tools/"
 fi
@@ -82,7 +83,7 @@ if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
     echo -n 'terminate '; tput rev; echo -n '\'
     tput sgr0; echo -n '}'
 fi
-    __detached=$(pgrep -x screen &> /dev/null && echo -n `screen -ls | grep Detached | awk -F ' ' '{print $1}'`)
+    __detached=$(pgrep -x screen &> /dev/null && echo -n $(screen -ls | grep Detached | awk -F ' ' '{print $1}'))
     [ -z "${__detached}" ] || (echo -n " detached:["; echo -n "${__detached}"; echo -n "]")
 }
 else
@@ -142,7 +143,7 @@ if command -v podman &> /dev/null ; then
     }
     tb-create () {
       if [ $# -eq 1 ] ; then
-        hfile=`mktemp`
+        hfile=$(mktemp)
         echo ${1}-tb >| ${hfile}
         toolbox create -c ${1} && toolbox run -c ${1} sudo hostname ${1}-tb && toolbox run -c ${1} sudo mv ${hfile} /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chmod 644 /etc/hostname.toolbox
       else
