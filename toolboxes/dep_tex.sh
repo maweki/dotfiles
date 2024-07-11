@@ -15,7 +15,7 @@ sudo dnf install -y \
   texlive-lipsum texlive-blindtext \
   texlive-algorithmicx texlive-minted \
   texlive-appendixnumberbeamer \
-  texlive-fixmetodonotes \
+  texlive-fixmetodonotes texlive-todonotes \
   texlive-acronym \
   texlive-classicthesis texlive-lni \
   texlive-wrapfig \
