@@ -186,6 +186,13 @@ if command -v podman &> /dev/null ; then
   fi
 fi
 
+if  ! command -v zed &> /dev/null ; then
+  zed () {
+    curl -f https://zed.dev/install.sh | sh
+    unset -f zed
+  }
+fi
+
 if ( command -v chrt && chrt -m | grep SCHED_IDLE | grep "0/0" ) &> /dev/null ; then
   lowprio="ionice -c3 -t chrt -i 0"
 else
