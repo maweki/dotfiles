@@ -12,9 +12,8 @@
   "soft_wrap": "editor_width",
   "show_whitespaces": "boundary",
   "tab_size": 2,
-  "wrap_guides": [
-    80
-  ]
+  "wrap_guides": [80, 120],
+  "format_on_save": "off",
   "theme": {
     "mode": "system",
     "light": "One Light",
