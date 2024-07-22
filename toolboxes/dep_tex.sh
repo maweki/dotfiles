@@ -17,6 +17,7 @@ sudo dnf install -y \
   texlive-appendixnumberbeamer \
   texlive-fixmetodonotes texlive-todonotes \
   texlive-acronym \
+  texlive-llncs \
   texlive-classicthesis texlive-lni \
   texlive-wrapfig \
   texlive-ifsym texlive-wasysym texlive-wasy \
@@ -31,6 +32,7 @@ sudo dnf install -y \
   texlive-cancel \
   texlive-newtxtt texlive-txfonts \
   texlive-bookmark \
+  texlive-lastpage \
   texlive-fontawesome5.noarch \
   texlive-ecltree texlive-eepic \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
