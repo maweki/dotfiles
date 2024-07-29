@@ -13,6 +13,7 @@ sudo dnf install -y \
   texlive-collection-langenglish texlive-hyphen-english \
   texlive-collection-langgerman texlive-hyphen-german \
   texlive-lipsum texlive-blindtext \
+  texlive-epigraph \
   texlive-algorithmicx texlive-minted \
   texlive-appendixnumberbeamer \
   texlive-fixmetodonotes texlive-todonotes \
