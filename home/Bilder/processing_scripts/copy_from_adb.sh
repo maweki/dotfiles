@@ -2,11 +2,24 @@
 
 lsusb -d 18d1:4ee2 &> /dev/null || exit 0
 
-for f in `adb shell ls /storage/self/primary/DCIM/Camera/`
+# Retrieve the detailed list of files from the phone's Camera directory in one go.
+files_info=$(adb shell ls -l /storage/self/primary/DCIM/Camera/)
+
+echo "$files_info" | while read -r line
 do
+    # Skip lines that do not contain file details
+    if [ "${line:0:1}" != "-" ]; then
+        continue
+    fi
+    
+    # Extract file name from the line
+    f=$(echo "$line" | awk '{print $NF}')
+    
 	format=${f:0:3}
 	ext=${f##*.}
-	atime=`adb shell ls -ll storage/self/primary/DCIM/Camera/${f} | awk '{ print $7 }'`
+	
+	# Extract the modification time from the line (7th column is the time)
+    atime=$(echo "$line" | awk '{print $7}')
 	year=${f:4:4}
 	month=${f:8:2}
 	day=${f:10:2}

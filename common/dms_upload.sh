@@ -58,10 +58,9 @@ if ! command -v inotifywait &>/dev/null; then
 fi
 
 # Start monitoring the directory for create and move events on PDF files
-inotifywait -m -e create -e moved_to "$WATCH_DIR" |
+inotifywait -m -e create -e moved_to --format '%w %e %f' "$WATCH_DIR" |
   while read -r directory event file; do
     if [[ "$file" =~ \.pdf$ ]]; then
-      sleep 10
-      process_pdf "$directory/$file"
+      (sleep 10; process_pdf "$directory/$file")&
     fi
   done
