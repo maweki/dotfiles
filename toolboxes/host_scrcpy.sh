@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #https://github.com/Genymobile/scrcpy/blob/master/BUILD.md
-VERSION="2.4"
+VERSION="2.7"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # cmake dependency
@@ -24,7 +24,7 @@ git clone -b v${VERSION} https://github.com/Genymobile/scrcpy ${SRCDIR}
 cd ${SRCDIR}
 
 source ~/.bashrc
-meson x --buildtype release --strip -Db_lto=true
+meson setup x --buildtype release --strip -Db_lto=true
 ninja -Cx
 sudo ninja -Cx install
 cd /tmp
