@@ -1,7 +1,7 @@
 shopt -s expand_aliases
 source ~/.bashrc
 
-RANDOM_IMPL=$((RANDOM % 3))
+RANDOM_IMPL=$((RANDOM % 4))
 
 if command -v yt-dlp >/dev/null 2>&1; then
   ytdownloader="yt-dlp"
@@ -13,6 +13,7 @@ else
   exit 1
   RANDOM_IMPL=$((RANDOM % 2))
 fi
+echo $RANDOM_IMPL
 
 IMAGE_PATH=~/.local/share/backgrounds/live.jpg
 
@@ -37,8 +38,7 @@ case $RANDOM_IMPL in
   3)
     streamurl=""
     download() {
-      # we need the 4k screenshot and we need it over both screens
-      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=oCEb3QFqxDk")
+      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=9g17M8wPPN8")
     }
     ;;
 esac
