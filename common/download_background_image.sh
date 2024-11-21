@@ -21,7 +21,7 @@ IMAGE_PATH=~/.local/share/backgrounds/live.jpg
 case $RANDOM_IMPL in
   0)
     download() {
-      lowprio ffmpeg -hide_banner -loglevel error  -y -i "https://stream.netco.de/LiveApp/streams/570476249623091947761256.m3u8" -frames:v 1 ${IMAGE_PATH}
+      lowprio ffmpeg -hide_banner -loglevel error  -y -i "https://stream.netco.de/LiveApp/streams/570476249623091947761256.m3u8" -frames:v 1 ${IMAGE_PATH} || exec bash "$0" "$@"
     }
     ;;
   1)
@@ -32,16 +32,18 @@ case $RANDOM_IMPL in
   2)
     streamurl=""
     download() {
-      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=kb4efymw-d0")
+      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=kb4efymw-d0") || exec bash "$0" "$@"
     }
     ;;
   3)
     streamurl=""
     download() {
-      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=9g17M8wPPN8")
+      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=9g17M8wPPN8") || exec bash "$0" "$@"
     }
     ;;
 esac
+
+sleep 10
 
 while :
 do
