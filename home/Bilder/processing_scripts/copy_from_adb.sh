@@ -3,7 +3,7 @@
 lsusb -d 18d1:4ee2 &> /dev/null || exit 0
 
 # Retrieve the detailed list of files from the phone's Camera directory in one go.
-files_info=$(adb shell ls -l /storage/self/primary/DCIM/Camera/)
+files_info=$(adb shell ls -l --full-time /storage/self/primary/DCIM/Camera/)
 
 echo "$files_info" | while read -r line
 do
