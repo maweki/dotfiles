@@ -71,7 +71,7 @@ if command -v screen &> /dev/null ; then
   alias screenS='screen -S'
   alias screenR='screen -R'
 __screen_info () {
-if echo -n "${TERM}" | grep "screen\\." &> /dev/null; then
+if [[ $TERM == screen || $TERM == screen.* ]]; then
     echo -n ' {C-a '
     tput rev; echo -n 'd'; tput sgr0; echo -n 'etach'
     tput sgr0; echo -n " / "
