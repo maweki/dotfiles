@@ -54,9 +54,17 @@ esac
 
 sleep 10
 
+FIRST_RUN=true
+
 while :
 do
   download
+  if [ "$FIRST_RUN" = true ]; then
+      # First run: do not wait long, use a short 5-second delay
+      sleep 5
+      FIRST_RUN=false
+      continue
+  fi
   if ( LANG=en nmcli --terse --fields GENERAL.METERED dev show 2> /dev/null | grep -q yes ) ; then
     # metered connection
     # try to download and wait half an hour
