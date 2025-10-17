@@ -1,7 +1,14 @@
 shopt -s expand_aliases
-source ~/.bashrc
 
-RANDOM_IMPL=$((RANDOM % 4))
+CASE_COUNT=4
+
+# Allow optional override of random implementation via first argument
+if [ -n "$1" ]; then
+  RANDOM_IMPL=$(( $1 % CASE_COUNT ))
+else
+  RANDOM_IMPL=$(( RANDOM % CASE_COUNT ))
+fi
+source ~/.bashrc
 
 if command -v yt-dlp >/dev/null 2>&1; then
   ytdownloader="yt-dlp"
