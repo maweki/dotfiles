@@ -23,7 +23,7 @@ fi
 echo $RANDOM_IMPL
 
 IMAGE_PATH=~/.local/share/backgrounds/live.jpg
-
+streamurl=""
 
 case $RANDOM_IMPL in
   0)
@@ -33,19 +33,21 @@ case $RANDOM_IMPL in
     ;;
   1)
     download() {
-      lowprio wget -q https://onlineservices.glasgow.gov.uk/georgesquarewebcam/fullsize3.jpg -O /tmp/georgesquare.jpg && mv /tmp/georgesquare.jpg ${IMAGE_PATH}
+      #lowprio wget -q https://onlineservices.glasgow.gov.uk/georgesquarewebcam/fullsize3.jpg -O /tmp/georgesquare.jpg && mv /tmp/georgesquare.jpg ${IMAGE_PATH}
+      RANDOM_IMPL=$(( RANDOM % CASE_COUNT ))
     }
     ;;
   2)
     streamurl=""
     download() {
-      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=kb4efymw-d0") || exec bash "$0" "$@"
+      #lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=kb4efymw-d0") || exec bash "$0" "$@"
+      RANDOM_IMPL=$(( RANDOM % CASE_COUNT ))
     }
     ;;
   3)
     streamurl=""
     download() {
-      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=9g17M8wPPN8") || exec bash "$0" "$@"
+      lowprio ffmpeg -hide_banner -i ${streamurl} -y -f image2 -frames:v 1 ${IMAGE_PATH} || streamurl=$(${ytdownloader} -g "https://www.youtube.com/watch?v=8miQ3QXA26Q") || exec bash "$0" "$@"
     }
     ;;
 esac
