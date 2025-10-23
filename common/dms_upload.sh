@@ -10,8 +10,9 @@ MAX_FILE_SIZE=1048576
 MAX_PAGE_COUNT=10
 
 # Remote host and directory for uploading PDF files
-REMOTE_HOST="root@192.168.1.3"
-REMOTE_DIR="/mnt/dms/paperless/consume/"
+REMOTE_HOST="root@192.168.1.10"
+REMOTE_DIR="/root/paperless/consume/"
+REMOTE_USER="1000:1000"
 
 # Function to test SSH connection
 test_ssh_connection() {
@@ -43,6 +44,7 @@ process_pdf() {
     if test_ssh_connection; then
       # Use scp to upload the PDF file to the remote host
       scp "$file" "$REMOTE_HOST:$REMOTE_DIR"
+      ssh $REMOTE_HOST chown $REMOTE_USER "$REMOTE_DIR"/"$file"
     else
       echo "Skipping PDF file: $file due to SSH connection error."
     fi
