@@ -11,23 +11,28 @@ do
     if [ "${line:0:1}" != "-" ]; then
         continue
     fi
-    
+
     # Extract file name from the line
     f=$(echo "$line" | awk '{print $NF}')
-    
-	format=${f:0:3}
-	ext=${f##*.}
-	
+    echo $line
+
+    format=${f%%_*}         # Extract everything before the first underscore (_)
+    start_pos=$(( ${#format} + 1 ))  # Calculate the starting position of the date
+    ext=${f##*.}
+
 	# Extract the modification time from the line (7th column is the time)
     atime=$(echo "$line" | awk '{print $7}')
-	year=${f:4:4}
-	month=${f:8:2}
-	day=${f:10:2}
+  #echo $atime
+
+
+	year=${f:start_pos:4}
+	month=${f:start_pos+4:2}
+	day=${f:start_pos+6:2}
 	h=${atime:0:2}
 	m=${atime:3:2}
 	s=${atime:6:2}
 	basename=${f%%.*}
-	rest=${basename:19}
+	rest=${basename:start_pos+15}
 	rest_=`echo ${rest} | sed "s/_/-/"`
 	targetname="${year}-${month}-${day} ${h}.${m}.${s}${rest_}.${ext}"
 	targetdir=~/Bilder/${year}-${month}-${day}/
@@ -35,6 +40,7 @@ do
 	if [ ! -f "${target}" ]
 	then
 		mkdir -p "${targetdir}"
+		echo adb pull -a "storage/self/primary/DCIM/Camera/${f}" "${target}"
 		adb pull -a "storage/self/primary/DCIM/Camera/${f}" "${target}" &> /dev/null
 	fi
 done
