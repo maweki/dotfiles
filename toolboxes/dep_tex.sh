@@ -12,6 +12,10 @@ sudo dnf install -y \
   texlive-multirow \
   texlive-collection-langenglish texlive-hyphen-english \
   texlive-collection-langgerman texlive-hyphen-german \
+  texlive-pbalance \
+  texlive-preprint texlive-makecell \
+  texlive-sttools \
+  texlive-doclicense \
   texlive-lipsum texlive-blindtext \
   texlive-epigraph \
   texlive-algorithmicx texlive-minted \
@@ -30,6 +34,7 @@ sudo dnf install -y \
   texlive-thmtools \
   texlive-ccicons \
   texlive-cleveref texlive-uri \
+  texlive-elsarticle \
   texlive-cancel \
   texlive-newtxtt texlive-txfonts \
   texlive-bookmark \
@@ -38,4 +43,5 @@ sudo dnf install -y \
   texlive-ecltree texlive-eepic \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz \
-  texstudio
+  texstudio \
+  qpdf
