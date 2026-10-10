@@ -23,11 +23,13 @@ sudo dnf install -y \
   texlive-fixmetodonotes texlive-todonotes \
   texlive-acronym \
   texlive-llncs \
+  texlive-orcidlink \
   texlive-classicthesis texlive-lni \
   texlive-wrapfig \
   texlive-ifsym texlive-wasysym texlive-wasy \
   texlive-siunitx \
   texlive-mwe \
+  texlive-selnolig \
   texlive-noindentafter \
   texlive-stmaryrd \
   texlive-textualicomma \
@@ -44,4 +46,5 @@ sudo dnf install -y \
   hunspell hunspell-en-GB hunspell-en-US hunspell-de \
   texlive-dot2texi dot2tex graphviz \
   texstudio \
-  qpdf
+  qpdf \
+  latexmk
