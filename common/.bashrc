@@ -145,8 +145,12 @@ if [ -z "${BASH_COMPLETION_VERSINFO-}" ] && ! shopt -oq posix ; then
   unset f
 fi
 
-# colorful terminal with results color
-PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH] "`\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
+# colorful prompt: user@host green after success, red after failure.
+# Colors and the SSH tag are looked up once instead of on every prompt.
+__ps1_status=("$(tput setaf 2 2> /dev/null)" "$(tput setaf 1 2> /dev/null)")
+__ps1_reset=$(tput sgr0 2> /dev/null)
+__ps1_ssh=${SSH_CLIENT:+[SSH] }
+PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__screen_info)\n\$ '
 
 # disable ctrl+s/ctrl+q flow control: ctrl+s no longer freezes the terminal
 # (and becomes forward history search)
@@ -230,7 +234,7 @@ if command -v git &> /dev/null ; then
     export GIT_PS1_SHOWDIRTYSTATE=1
 
     if __git_ps1 &> /dev/null ; then
-        PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH]"`\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
+        PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
     fi
 
     if declare -F __git_complete &> /dev/null ; then
@@ -286,7 +290,7 @@ if command -v flatpak &> /dev/null ; then
 fi
 
 anon () {
-  PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
+  PS1='\[${__ps1_status[$?>0]}\]\W\[${__ps1_reset}\] \$ '
   reset
 }
 
