@@ -380,6 +380,8 @@ if [[ $- == *i* ]] ; then # If shell is interactive
   printf "\033]777;container;pop;;\033\\"
 fi
 
+alias nosleep='systemd-inhibit --what=sleep --why="SSH session" sleep infinity'
+
 # color everything
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
