@@ -140,49 +140,60 @@ if command -v podman &> /dev/null ; then
     alias tb-ls='toolbox list'
     alias tb-list='toolbox list'
     tb-help () {
-      echo "tb CONTAINERNAME"
-      echo "tb-create CONTAINERNAME [INIT COMMAND]"
-      echo "tb-create-with-command CONTAINERNAME CONTAINERCOMMAND [INIT COMMAND]"
-      echo "tb-list"
-      echo "tb-remove CONTAINER [CONTAINER ...]"
-      echo "tb-run CONTAINER [CMD=CONTAINER]"
-      echo "tb-run-tmp CMD"
-      echo "tb-stop CONTAINER [CONTAINER ...]"
+      echo "tb CONTAINER                          enter the toolbox"
+      echo "tb-create CONTAINER [INIT CMD...]     create, set hostname CONTAINER-tb, run INIT CMD inside"
+      echo "tb-create-with-command CONTAINER CMD [INIT CMD...]"
+      echo "                                      tb-create, then add ~/.local/bin/CONTAINER running CMD inside"
+      echo "tb-list                               list toolboxes"
+      echo "tb-remove CONTAINER...                stop and remove toolboxes"
+      echo "tb-run CONTAINER [CMD...]             run CMD (default: CONTAINER) inside"
+      echo "tb-run-tmp CMD...                     run CMD in a throwaway toolbox"
+      echo "tb-stop CONTAINER...                  stop toolboxes"
     }
     tb-create () {
-      if [ $# -eq 1 ] ; then
-        hfile=$(mktemp)
-        echo ${1}-tb >| ${hfile}
-        toolbox create -c ${1} && toolbox run -c ${1} sudo hostname ${1}-tb && toolbox run -c ${1} sudo mv ${hfile} /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chown root:root /etc/hostname.toolbox && toolbox run -c ${1} sudo chmod 644 /etc/hostname.toolbox
-      else
-        tb-create $1 && tb-run $1 ${@:2}
+      [ $# -ge 1 ] || { echo "usage: tb-create CONTAINER [INIT CMD...]" >&2; return 2; }
+      local name=$1
+      toolbox create -c "$name" &&
+      toolbox run -c "$name" sudo sh -c 'echo "$1" > /etc/hostname.toolbox && hostname -F /etc/hostname.toolbox' sh "${name}-tb" || return
+      if [ $# -gt 1 ] ; then
+        tb-run "$name" "${@:2}"
       fi
     }
     tb-create-with-command () {
-      tb-create $1 ${@:3} && echo "source ~/.bashrc && tb-run $1 $2 \$@ ; #tb-stop $1" >| ~/.local/bin/${1} && chmod +x ~/.local/bin/${1}
+      [ $# -ge 2 ] || { echo "usage: tb-create-with-command CONTAINER CMD [INIT CMD...]" >&2; return 2; }
+      local name=$1 cmd=$2 wrapper=~/.local/bin/$1
+      if [ -e "$wrapper" ] && ! grep -qE 'toolbox run|tb-run' "$wrapper" ; then
+        echo "tb-create-with-command: $wrapper exists and is not a toolbox wrapper" >&2
+        return 1
+      fi
+      tb-create "$name" "${@:3}" || return
+      mkdir -p ~/.local/bin &&
+      printf '#!/bin/bash\n# created by tb-create-with-command\nexec toolbox run -c %q %q "$@"\n' "$name" "$cmd" >| "$wrapper" &&
+      chmod +x "$wrapper"
     }
     tb-remove () {
-      for tb in "$@" ; do
-        tb-stop $tb
-        toolbox rm $tb
-      done
+      [ $# -ge 1 ] || { echo "usage: tb-remove CONTAINER..." >&2; return 2; }
+      toolbox rm --force "$@"
     }
     tb-stop () {
-      for tb in "$@" ; do
-        podman stop `toolbox list | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" | grep running | grep " ${tb} " | cut -c -12`
-      done
+      [ $# -ge 1 ] || { echo "usage: tb-stop CONTAINER..." >&2; return 2; }
+      podman stop "$@" > /dev/null
     }
     tb-run () {
+      [ $# -ge 1 ] || { echo "usage: tb-run CONTAINER [CMD...]" >&2; return 2; }
       if [ $# -eq 1 ] ; then
-        toolbox run -c $1 $1
+        toolbox run -c "$1" "$1"
       else
-        toolbox run -c $@
+        toolbox run -c "$@"
       fi
     }
     tb-run-tmp () {
-      tmpname=`echo -n tmpcont${RANDOM}`
-      tb-create ${tmpname} && tb-run ${tmpname} ${@}
-      tb-remove ${tmpname}
+      [ $# -ge 1 ] || { echo "usage: tb-run-tmp CMD..." >&2; return 2; }
+      local name=tmpcont${RANDOM} rc
+      tb-create "$name" && tb-run "$name" "$@"
+      rc=$?
+      tb-remove "$name" > /dev/null
+      return $rc
     }
   fi
   if  ! command -v docker &> /dev/null ; then
