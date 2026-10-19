@@ -136,6 +136,15 @@ export EDITOR=nano
 # tb-create-with-command). Everything below is for interactive use only.
 [[ $- == *i* ]] || return 0
 
+# bash-completion: Fedora loads it via /etc/bashrc, Debian only from its
+# default ~/.bashrc, so load it here if that hasn't happened yet
+if [ -z "${BASH_COMPLETION_VERSINFO-}" ] && ! shopt -oq posix ; then
+  for f in /usr/share/bash-completion/bash_completion /etc/bash_completion ; do
+    [ -r "$f" ] && { . "$f" ; break ; }
+  done
+  unset f
+fi
+
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH] "`\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
 
@@ -198,12 +207,25 @@ fi
 if command -v git &> /dev/null ; then
     alias g="git"
 
-    # adding git completion and info
-    [ -s /usr/share/git-core/contrib/completion/git-prompt.sh ] && source /usr/share/git-core/contrib/completion/git-prompt.sh
-    [ -s /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
-    [ -s /etc/bash_completion.d/git-prompt ] && source /etc/bash_completion.d/git-prompt
-    [ -s /etc/bash_completion.d/git ] && source /etc/bash_completion.d/git
-    [ -s /etc/bash_completion.d/git-flow-completion.bash ] && source /etc/bash_completion.d/git-flow-completion.bash
+    # git prompt (__git_ps1): Fedora, Debian
+    if ! declare -F __git_ps1 &> /dev/null ; then
+      for f in /usr/share/git-core/contrib/completion/git-prompt.sh /usr/lib/git-core/git-sh-prompt ; do
+        [ -r "$f" ] && { . "$f" ; break ; }
+      done
+      unset f
+    fi
+
+    # git completion is loaded on demand by bash-completion, but completing
+    # the g alias needs it now. Without bash-completion, source it directly.
+    if ! declare -F __git_complete &> /dev/null ; then
+      if declare -F _comp_load &> /dev/null ; then
+        _comp_load git
+      elif declare -F __load_completion &> /dev/null ; then
+        __load_completion git
+      elif [ -r /usr/share/bash-completion/completions/git ] ; then
+        . /usr/share/bash-completion/completions/git
+      fi
+    fi
 
     export GIT_PS1_SHOWDIRTYSTATE=1
 
@@ -211,8 +233,8 @@ if command -v git &> /dev/null ; then
         PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH]"`\u@\h\[`tput sgr0`\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
     fi
 
-    if command -v __git_wrap__git_main &> /dev/null ; then
-        complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
+    if declare -F __git_complete &> /dev/null ; then
+      __git_complete g __git_main
     fi
 
     gitstashpullpop () {
