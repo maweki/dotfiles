@@ -299,7 +299,6 @@ alias lowprio=$lowprio
 
 if command -v flatpak &> /dev/null ; then
   declare -A fpapps
-  fpapps[atom]=io.atom.Atom
   fpapps[eog]=org.gnome.eog
   fpapps[evince]=org.gnome.Evince
   fpapps[gedit]=org.gnome.gedit
