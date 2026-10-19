@@ -7,3 +7,4 @@ chmod 700 .
 chmod 700 common
 chmod 700 common/.ssh
 chmod 600 common/.ssh/authorized_keys
+chmod 600 common/.ssh/rc
