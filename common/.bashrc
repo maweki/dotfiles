@@ -7,7 +7,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # check if function exists and define empty one if doesn't
-if [[ $(type -t "__vte_prompt_command") != function ]]; then
+if ! declare -F __vte_prompt_command > /dev/null ; then
     function __vte_prompt_command(){
         return 0
     }
