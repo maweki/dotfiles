@@ -467,7 +467,8 @@ bind "set show-all-if-ambiguous on"
 bind "set mark-symlinked-directories on"
 
 # disable container tracking https://github.com/containers/toolbox/issues/218
-printf "\033]777;container;pop;;\033\\"
+# (only when writing to a terminal, so it doesn't end up in pipes and files)
+[ -t 1 ] && printf "\033]777;container;pop;;\033\\"
 
 alias nosleep='systemd-inhibit --what=sleep --why="SSH session" sleep infinity'
 
