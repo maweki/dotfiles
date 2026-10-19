@@ -138,7 +138,11 @@ fi
 export EDITOR=nano
 
 # nvm (loaded here so node/npm also work in ssh host cmd)
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -n "${XDG_CONFIG_HOME-}" ] ; then
+  export NVM_DIR=$XDG_CONFIG_HOME/nvm
+else
+  export NVM_DIR=$HOME/.nvm
+fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Everything above is also needed by non-interactive shells (ssh host cmd,
@@ -409,12 +413,14 @@ fi
 if [ -s "$NVM_DIR/nvm.sh" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 else
+  # install the latest nvm release (as in nvm's manual install) and load it
   nvm-install () {
-    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
-    pushd "$NVM_DIR" && \
-    git fetch --tags && \
-    git checkout `git tag -l --sort=taggerdate | tail -1` && \
-    popd
+    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR" &&
+    ( cd "$NVM_DIR" &&
+      git checkout -q "$(git describe --abbrev=0 --tags --match 'v[0-9]*' "$(git rev-list --tags --max-count=1)")" ) &&
+    \. "$NVM_DIR/nvm.sh" &&
+    \. "$NVM_DIR/bash_completion" &&
+    unset -f nvm-install
   }
 fi
 
