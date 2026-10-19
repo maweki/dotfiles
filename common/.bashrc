@@ -462,8 +462,8 @@ printf "\033]777;container;pop;;\033\\"
 alias nosleep='systemd-inhibit --what=sleep --why="SSH session" sleep infinity'
 
 # color everything
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias egrep='grep -E --color=auto'
+alias fgrep='grep -F --color=auto'
 alias grep='grep --color=auto'
 alias l.='ls -d .* --color=auto'
 alias ll='ls -l --color=auto'
@@ -472,11 +472,11 @@ alias lsd='ls -tl'
 alias lss='ls -Sl'
 alias ..='cd ..'
 alias rm='rm -v'
-alias xzegrep='xzegrep --color=auto'
-alias xzfgrep='xzfgrep --color=auto'
+alias xzegrep='xzgrep -E --color=auto'
+alias xzfgrep='xzgrep -F --color=auto'
 alias xzgrep='xzgrep --color=auto'
-alias zegrep='zegrep --color=auto'
-alias zfgrep='zfgrep --color=auto'
+alias zegrep='zgrep -E --color=auto'
+alias zfgrep='zgrep -F --color=auto'
 alias zgrep='zgrep --color=auto'
 
 [ -s ~/.plog.sh ] && source ~/.plog.sh
