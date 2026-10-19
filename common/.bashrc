@@ -15,27 +15,44 @@ fi
 
 # User specific environment and startup programs
 
-if [ -d "${HOME}/.cabal/bin" ] ; then
-  PATH=$HOME/.cabal/bin:$PATH
-fi
+# pathadd [-a] DIR [VAR]: put DIR at the front (-a: the end) of VAR (default
+# PATH), moving it there if it's already in it. Nonexistent DIRs are skipped,
+# so re-sourcing this file doesn't grow the variable.
+pathadd () {
+  local append=
+  [ "$1" = -a ] && { append=1; shift; }
+  local dir=$1 var=${2:-PATH}
+  [ -d "$dir" ] || return 0
+  local cur=":${!var}:"
+  while [[ $cur == *":$dir:"* ]] ; do
+    cur=${cur//":$dir:"/:}
+  done
+  cur=${cur#:} ; cur=${cur%:}
+  if [ -n "$append" ] ; then
+    cur=${cur:+$cur:}$dir
+  else
+    cur=$dir${cur:+:$cur}
+  fi
+  export "$var=$cur"
+}
 
-if [ -d "${HOME}/.cargo/bin" ] ; then
-  PATH=$HOME/.cargo/bin:$PATH
-fi
+pathadd "$HOME/.cabal/bin"
+pathadd "$HOME/.cargo/bin"
 
 if [ -d "${HOME}/.local/android/sdk" ] ; then
-    export ANDROID_HOME=${HOME}/.local/android/sdk
-    export PATH="${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
+  export ANDROID_HOME=${HOME}/.local/android/sdk
+  pathadd -a "$ANDROID_HOME/tools"
+  pathadd -a "$ANDROID_HOME/platform-tools"
 fi
 
 if [[ "${container}" = "podman" || "${container}" = "oci" ]] ; then
   # prefer "system" installation from the container
-  export PATH=$PATH:$HOME/.local/bin
+  pathadd -a "$HOME/.local/bin"
   [ -f /etc/hostname.toolbox ] && sudo hostname -F /etc/hostname.toolbox
 else
-  export PATH=$HOME/.local/bin:$PATH
+  pathadd "$HOME/.local/bin"
 fi
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}${HOME}/.local/lib
+pathadd -a "$HOME/.local/lib" LD_LIBRARY_PATH
 
 
 # TZ / LANG
