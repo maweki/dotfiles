@@ -164,7 +164,20 @@ __prompt_command_add () {
 __ps1_status=("$(tput setaf 2 2> /dev/null)" "$(tput setaf 1 2> /dev/null)")
 __ps1_reset=$(tput sgr0 2> /dev/null)
 __ps1_ssh=${SSH_CLIENT:+[SSH] }
-PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD${__screen_info_str}\n\$ '
+# The prompt is __ps1_pre + git info + __ps1_post. __ps1_update builds it
+# before every prompt; __git_ps1 in this mode runs without a subshell.
+# Set __ps1_nogit to leave out the git info.
+__ps1_pre='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD'
+__ps1_post='${__screen_info_str}\n\$ '
+__ps1_update () {
+  if [ -z "${__ps1_nogit-}" ] && declare -F __git_ps1 > /dev/null ; then
+    __git_ps1 "$__ps1_pre" "$__ps1_post"
+  else
+    PS1=$__ps1_pre$__ps1_post
+  fi
+}
+__ps1_update
+__prompt_command_add __ps1_update
 
 # disable ctrl+s/ctrl+q flow control: ctrl+s no longer freezes the terminal
 # (and becomes forward history search)
@@ -245,10 +258,6 @@ if command -v git &> /dev/null ; then
 
     export GIT_PS1_SHOWDIRTYSTATE=1
 
-    if __git_ps1 &> /dev/null ; then
-        PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__git_ps1)${__screen_info_str}\n\$ '
-    fi
-
     if declare -F __git_complete &> /dev/null ; then
       __git_complete g __git_main
     fi
@@ -302,7 +311,9 @@ if command -v flatpak &> /dev/null ; then
 fi
 
 anon () {
-  PS1='\[${__ps1_status[$?>0]}\]\W\[${__ps1_reset}\] \$ '
+  __ps1_pre='\[${__ps1_status[$?>0]}\]\W\[${__ps1_reset}\]'
+  __ps1_post=' \$ '
+  __ps1_nogit=1
   reset
 }
 
@@ -329,7 +340,7 @@ if command -v stack &> /dev/null ; then
 fi
 
 if [ -n "$UNDER_JHBUILD" ]; then
-    PS1="[jhbuild] $PS1"
+    __ps1_pre="[jhbuild] $__ps1_pre"
 fi
 
 alias websearch="ddgr --np -x"
