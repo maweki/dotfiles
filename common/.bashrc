@@ -41,6 +41,84 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}${HOME}/.local/lib
 # TZ / LANG
 #export TZ="Europe/Berlin"
 
+if command -v podman &> /dev/null ; then
+  if command -v toolbox &> /dev/null ; then
+    alias tb='toolbox enter -c'
+    alias tb-ls='toolbox list'
+    alias tb-list='toolbox list'
+    tb-help () {
+      echo "tb CONTAINER                          enter the toolbox"
+      echo "tb-create CONTAINER [INIT CMD...]     create, set hostname CONTAINER-tb, run INIT CMD inside"
+      echo "tb-create-with-command CONTAINER CMD [INIT CMD...]"
+      echo "                                      tb-create, then add ~/.local/bin/CONTAINER running CMD inside"
+      echo "tb-list                               list toolboxes"
+      echo "tb-remove CONTAINER...                stop and remove toolboxes"
+      echo "tb-run CONTAINER [CMD...]             run CMD (default: CONTAINER) inside"
+      echo "tb-run-tmp CMD...                     run CMD in a throwaway toolbox"
+      echo "tb-stop CONTAINER...                  stop toolboxes"
+    }
+    tb-create () {
+      [ $# -ge 1 ] || { echo "usage: tb-create CONTAINER [INIT CMD...]" >&2; return 2; }
+      local name=$1
+      toolbox create -c "$name" &&
+      toolbox run -c "$name" sudo sh -c 'echo "$1" > /etc/hostname.toolbox && hostname -F /etc/hostname.toolbox' sh "${name}-tb" || return
+      if [ $# -gt 1 ] ; then
+        tb-run "$name" "${@:2}"
+      fi
+    }
+    tb-create-with-command () {
+      [ $# -ge 2 ] || { echo "usage: tb-create-with-command CONTAINER CMD [INIT CMD...]" >&2; return 2; }
+      local name=$1 cmd=$2 wrapper=~/.local/bin/$1
+      if [ -e "$wrapper" ] && ! grep -qE 'toolbox run|tb-run' "$wrapper" ; then
+        echo "tb-create-with-command: $wrapper exists and is not a toolbox wrapper" >&2
+        return 1
+      fi
+      tb-create "$name" "${@:3}" || return
+      mkdir -p ~/.local/bin &&
+      printf '#!/bin/bash\n# created by tb-create-with-command\nexec toolbox run -c %q %q "$@"\n' "$name" "$cmd" >| "$wrapper" &&
+      chmod +x "$wrapper"
+    }
+    tb-remove () {
+      [ $# -ge 1 ] || { echo "usage: tb-remove CONTAINER..." >&2; return 2; }
+      toolbox rm --force "$@"
+    }
+    tb-stop () {
+      [ $# -ge 1 ] || { echo "usage: tb-stop CONTAINER..." >&2; return 2; }
+      podman stop "$@" > /dev/null
+    }
+    tb-run () {
+      [ $# -ge 1 ] || { echo "usage: tb-run CONTAINER [CMD...]" >&2; return 2; }
+      if [ $# -eq 1 ] ; then
+        toolbox run -c "$1" "$1"
+      else
+        toolbox run -c "$@"
+      fi
+    }
+    tb-run-tmp () {
+      [ $# -ge 1 ] || { echo "usage: tb-run-tmp CMD..." >&2; return 2; }
+      local name=tmpcont${RANDOM} rc
+      tb-create "$name" && tb-run "$name" "$@"
+      rc=$?
+      tb-remove "$name" > /dev/null
+      return $rc
+    }
+  fi
+  if  ! command -v docker &> /dev/null ; then
+    alias docker='podman'
+    alias docker-compose='podman-compose'
+  fi
+  if  ! command -v docker-compose &> /dev/null ; then
+    alias docker-compose='podman-compose'
+  fi
+fi
+
+export EDITOR=nano
+
+# Everything above is also needed by non-interactive shells (ssh host cmd,
+# scp, rsync, scripts sourcing ~/.bashrc such as wrappers made by older
+# tb-create-with-command). Everything below is for interactive use only.
+[[ $- == *i* ]] || return 0
+
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH] "`\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
 
@@ -134,77 +212,6 @@ if command -v tsp &> /dev/null ; then
   alias q=tsp
 fi
 
-if command -v podman &> /dev/null ; then
-  if command -v toolbox &> /dev/null ; then
-    alias tb='toolbox enter -c'
-    alias tb-ls='toolbox list'
-    alias tb-list='toolbox list'
-    tb-help () {
-      echo "tb CONTAINER                          enter the toolbox"
-      echo "tb-create CONTAINER [INIT CMD...]     create, set hostname CONTAINER-tb, run INIT CMD inside"
-      echo "tb-create-with-command CONTAINER CMD [INIT CMD...]"
-      echo "                                      tb-create, then add ~/.local/bin/CONTAINER running CMD inside"
-      echo "tb-list                               list toolboxes"
-      echo "tb-remove CONTAINER...                stop and remove toolboxes"
-      echo "tb-run CONTAINER [CMD...]             run CMD (default: CONTAINER) inside"
-      echo "tb-run-tmp CMD...                     run CMD in a throwaway toolbox"
-      echo "tb-stop CONTAINER...                  stop toolboxes"
-    }
-    tb-create () {
-      [ $# -ge 1 ] || { echo "usage: tb-create CONTAINER [INIT CMD...]" >&2; return 2; }
-      local name=$1
-      toolbox create -c "$name" &&
-      toolbox run -c "$name" sudo sh -c 'echo "$1" > /etc/hostname.toolbox && hostname -F /etc/hostname.toolbox' sh "${name}-tb" || return
-      if [ $# -gt 1 ] ; then
-        tb-run "$name" "${@:2}"
-      fi
-    }
-    tb-create-with-command () {
-      [ $# -ge 2 ] || { echo "usage: tb-create-with-command CONTAINER CMD [INIT CMD...]" >&2; return 2; }
-      local name=$1 cmd=$2 wrapper=~/.local/bin/$1
-      if [ -e "$wrapper" ] && ! grep -qE 'toolbox run|tb-run' "$wrapper" ; then
-        echo "tb-create-with-command: $wrapper exists and is not a toolbox wrapper" >&2
-        return 1
-      fi
-      tb-create "$name" "${@:3}" || return
-      mkdir -p ~/.local/bin &&
-      printf '#!/bin/bash\n# created by tb-create-with-command\nexec toolbox run -c %q %q "$@"\n' "$name" "$cmd" >| "$wrapper" &&
-      chmod +x "$wrapper"
-    }
-    tb-remove () {
-      [ $# -ge 1 ] || { echo "usage: tb-remove CONTAINER..." >&2; return 2; }
-      toolbox rm --force "$@"
-    }
-    tb-stop () {
-      [ $# -ge 1 ] || { echo "usage: tb-stop CONTAINER..." >&2; return 2; }
-      podman stop "$@" > /dev/null
-    }
-    tb-run () {
-      [ $# -ge 1 ] || { echo "usage: tb-run CONTAINER [CMD...]" >&2; return 2; }
-      if [ $# -eq 1 ] ; then
-        toolbox run -c "$1" "$1"
-      else
-        toolbox run -c "$@"
-      fi
-    }
-    tb-run-tmp () {
-      [ $# -ge 1 ] || { echo "usage: tb-run-tmp CMD..." >&2; return 2; }
-      local name=tmpcont${RANDOM} rc
-      tb-create "$name" && tb-run "$name" "$@"
-      rc=$?
-      tb-remove "$name" > /dev/null
-      return $rc
-    }
-  fi
-  if  ! command -v docker &> /dev/null ; then
-    alias docker='podman'
-    alias docker-compose='podman-compose'
-  fi
-  if  ! command -v docker-compose &> /dev/null ; then
-    alias docker-compose='podman-compose'
-  fi
-fi
-
 if  ! command -v zed &> /dev/null ; then
   zed () {
     curl -f https://zed.dev/install.sh | sh
@@ -240,7 +247,6 @@ anon () {
   PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]\W\[`tput sgr0`\] \$ '
   reset
 }
-export EDITOR=nano
 
 re-tmp () {
   [ -n "$1" ] || { echo "usage: re-tmp <size-in-GB>" >&2; return 1; }
