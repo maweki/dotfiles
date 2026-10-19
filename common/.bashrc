@@ -212,10 +212,13 @@ if command -v tsp &> /dev/null ; then
   alias q=tsp
 fi
 
-if  ! command -v zed &> /dev/null ; then
+# offer to install zed on first use, but only in graphical sessions
+if ! command -v zed &> /dev/null && [ -n "${WAYLAND_DISPLAY}${DISPLAY}" ] ; then
   zed () {
-    curl -f https://zed.dev/install.sh | sh
-    unset -f zed
+    local reply
+    read -rp "zed is not installed. Install it from zed.dev now? [y/N] " reply
+    [[ $reply == [yY]* ]] || return 1
+    curl -fsSL https://zed.dev/install.sh | sh && unset -f zed && hash -r
   }
 fi
 
