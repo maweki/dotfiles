@@ -484,9 +484,3 @@ alias zgrep='zgrep --color=auto'
 # bash-completion completes sudo properly (options, then the command's own
 # completion); without it, at least complete commands and files
 [ -n "${BASH_COMPLETION_VERSINFO-}" ] || complete -cf sudo
-
-###-tns-completion-start-###
-if [ -f /home/maweki/.tnsrc ]; then
-    source /home/maweki/.tnsrc
-fi
-###-tns-completion-end-###
