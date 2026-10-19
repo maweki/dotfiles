@@ -122,7 +122,6 @@ if command -v podman &> /dev/null ; then
   fi
   if  ! command -v docker &> /dev/null ; then
     alias docker='podman'
-    alias docker-compose='podman-compose'
   fi
   if  ! command -v docker-compose &> /dev/null ; then
     alias docker-compose='podman-compose'
