@@ -339,10 +339,6 @@ if command -v stack &> /dev/null ; then
   eval "$(stack --bash-completion-script stack)"
 fi
 
-if [ -n "$UNDER_JHBUILD" ]; then
-    __ps1_pre="[jhbuild] $__ps1_pre"
-fi
-
 alias websearch="ddgr --np -x"
 
 if command -v ffmpeg &> /dev/null ; then
