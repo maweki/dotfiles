@@ -44,8 +44,9 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}${HOME}/.local/lib
 # colorful terminal with results color
 PS1='\[`[ $? = 0 ] && X=2 || X=1; tput setaf $X`\]`[ ! -z "${SSH_CLIENT}" ] && echo "[SSH] "`\u@\h\[`tput sgr0`\]:$PWD$(__screen_info)\n\$ '
 
-# prevent ctrl+s from keeping on freezing because I can never remember ctrl+q
-stty ixany
+# disable ctrl+s/ctrl+q flow control: ctrl+s no longer freezes the terminal
+# (and becomes forward history search)
+[ -t 0 ] && stty -ixon
 
 # Prevent file overwrite on stdout redirection
 # Use `>|` to force redirection to an existing file
