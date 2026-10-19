@@ -131,6 +131,10 @@ fi
 
 export EDITOR=nano
 
+# nvm (loaded here so node/npm also work in ssh host cmd)
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 # Everything above is also needed by non-interactive shells (ssh host cmd,
 # scp, rsync, scripts sourcing ~/.bashrc such as wrappers made by older
 # tb-create-with-command). Everything below is for interactive use only.
@@ -393,10 +397,8 @@ complete -F _known_hosts issh
 complete -F _known_hosts ssh-home
 complete -F _known_hosts ssh-work
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
-\. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 else
   nvm-install () {
     git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
