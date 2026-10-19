@@ -48,7 +48,14 @@ fi
 if [[ "${container}" = "podman" || "${container}" = "oci" ]] ; then
   # prefer "system" installation from the container
   pathadd -a "$HOME/.local/bin"
-  [ -f /etc/hostname.toolbox ] && sudo hostname -F /etc/hostname.toolbox
+  # set the hostname from tb-create, but only call sudo if it isn't set yet
+  # ($HOSTNAME can't be used: toolbox passes in the host's)
+  if [ -r /etc/hostname.toolbox ] ; then
+    read -r __tb_hostname < /etc/hostname.toolbox
+    read -r __tb_current < /proc/sys/kernel/hostname
+    [ "$__tb_current" = "$__tb_hostname" ] || sudo hostname -F /etc/hostname.toolbox
+    unset __tb_hostname __tb_current
+  fi
 else
   pathadd "$HOME/.local/bin"
 fi
