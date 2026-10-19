@@ -422,8 +422,8 @@ if command -v hstr &> /dev/null ; then
       { READLINE_LINE="$( { </dev/tty hstr ${READLINE_LINE}; } 2>&1 1>&3 3>&- )"; } 3>&1;
       READLINE_POINT=${#READLINE_LINE}
   }
-  # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-  if [[ $- =~ .*i.* ]]; then bind -x '"\C-r": "hstrnotiocsti"'; fi
+  # bind hstr to Ctrl-r (for Vi mode check doc)
+  bind -x '"\C-r": "hstrnotiocsti"'
   export HSTR_TIOCSTI=n
 fi
 
@@ -433,35 +433,33 @@ fi
 # %T equivalent to %H:%M:%S (24-hours format)
 HISTTIMEFORMAT='%F %T '
 
-if [[ $- == *i* ]] ; then # If shell is interactive
-  # Enable history expansion with space
-  # E.g. typing !!<space> will replace the !! with your last command
-  bind Space:magic-space
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
 
-  # Enable incremental history search with up/down arrows (also Readline goodness)
-  # Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
-  bind '"\e[A": history-search-backward'
-  bind '"\e[B": history-search-forward'
-  bind '"\e[C": forward-char'
-  bind '"\e[D": backward-char'
+# Enable incremental history search with up/down arrows (also Readline goodness)
+# Learn more about this here: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
 
-  ## SMARTER TAB-COMPLETION (Readline bindings) ##
+## SMARTER TAB-COMPLETION (Readline bindings) ##
 
-  # Perform file completion in a case insensitive fashion
-  bind "set completion-ignore-case on"
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
 
-  # Treat hyphens and underscores as equivalent
-  bind "set completion-map-case on"
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
 
-  # Display matches for ambiguous patterns at first tab press
-  bind "set show-all-if-ambiguous on"
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
 
-  # Immediately add a trailing slash when autocompleting symlinks to directories
-  bind "set mark-symlinked-directories on"
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind "set mark-symlinked-directories on"
 
-  # disable container tracking https://github.com/containers/toolbox/issues/218
-  printf "\033]777;container;pop;;\033\\"
-fi
+# disable container tracking https://github.com/containers/toolbox/issues/218
+printf "\033]777;container;pop;;\033\\"
 
 alias nosleep='systemd-inhibit --what=sleep --why="SSH session" sleep infinity'
 
