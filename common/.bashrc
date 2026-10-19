@@ -462,8 +462,9 @@ alias zgrep='zgrep --color=auto'
 
 [ -s ~/.plog.sh ] && source ~/.plog.sh
 
-# bash-completion for sudo
-complete -cf sudo
+# bash-completion completes sudo properly (options, then the command's own
+# completion); without it, at least complete commands and files
+[ -n "${BASH_COMPLETION_VERSINFO-}" ] || complete -cf sudo
 
 ###-tns-completion-start-###
 if [ -f /home/maweki/.tnsrc ]; then
