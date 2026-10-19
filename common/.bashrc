@@ -231,7 +231,9 @@ anon () {
 export EDITOR=nano
 
 re-tmp () {
-  sudo mount -o remount,size=${1}G,noatime /tmp
+  [ -n "$1" ] || { echo "usage: re-tmp <size-in-GB>" >&2; return 1; }
+  sudo mount -o remount,size="${1}G",noatime /tmp &&
+  sudo setquota -u "$USER" 0 0 0 0 /tmp
 }
 
 if command -v python3 &> /dev/null ; then
