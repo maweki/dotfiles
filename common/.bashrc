@@ -301,7 +301,8 @@ if ( command -v chrt && chrt -m | grep SCHED_IDLE | grep "0/0" ) &> /dev/null ; 
 else
   lowprio="nice"
 fi
-alias lowprio=$lowprio
+alias lowprio="$lowprio"
+unset lowprio
 
 if command -v flatpak &> /dev/null ; then
   declare -A fpapps
@@ -311,12 +312,14 @@ if command -v flatpak &> /dev/null ; then
   fpapps[libreoffice]=org.libreoffice.LibreOffice
   fpapps[vlc]=org.videolan.VLC
   fpapps[zotero]=org.zotero.Zotero
-  fplist=`flatpak list --app --columns=application`
+  # alias commands that aren't installed natively to their installed flatpak
+  fplist=$'\n'$(flatpak list --app --columns=application)$'\n'
   for fpcmd in "${!fpapps[@]}"; do
-    if ! command -v ${fpcmd} &> /dev/null && (echo "${fplist}" | grep ${fpapps[${fpcmd}]} &> /dev/null) ; then
-      alias ${fpcmd}="flatpak run ${fpapps[${fpcmd}]}"
+    if ! command -v "$fpcmd" &> /dev/null && [[ $fplist == *$'\n'"${fpapps[$fpcmd]}"$'\n'* ]] ; then
+      alias "$fpcmd=flatpak run ${fpapps[$fpcmd]}"
     fi
   done
+  unset fpapps fplist fpcmd
 fi
 
 anon () {
