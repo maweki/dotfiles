@@ -341,8 +341,6 @@ if command -v stack &> /dev/null ; then
   eval "$(stack --bash-completion-script stack)"
 fi
 
-alias websearch="ddgr --np -x"
-
 if command -v ffmpeg &> /dev/null ; then
   recode-audio () {
     for video in "$@"
