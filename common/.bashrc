@@ -389,9 +389,12 @@ alias socks-garten='ssh -p 10022 -TND 1080 root@maweki.de'
 alias ssh-work='ssh -J dbs1.informatik.uni-halle.de'
 alias scp-work='scp -J dbs1.informatik.uni-halle.de'
 alias socks-work='ssh -TND 1080 dbs1.informatik.uni-halle.de'
-complete -F _known_hosts issh
-complete -F _known_hosts ssh-home
-complete -F _known_hosts ssh-work
+# host completion comes from bash-completion
+if declare -F _known_hosts &> /dev/null ; then
+  complete -F _known_hosts issh
+  complete -F _known_hosts ssh-home
+  complete -F _known_hosts ssh-work
+fi
 
 if [ -s "$NVM_DIR/nvm.sh" ]; then
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
