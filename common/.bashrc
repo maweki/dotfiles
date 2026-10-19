@@ -145,12 +145,26 @@ if [ -z "${BASH_COMPLETION_VERSINFO-}" ] && ! shopt -oq posix ; then
   unset f
 fi
 
+# __prompt_command_add CMD: run CMD before every prompt, only added once so
+# re-sourcing this file is harmless. PROMPT_COMMAND is an array since bash 5.1.
+__prompt_command_add () {
+  local c
+  if (( BASH_VERSINFO[0] * 100 + BASH_VERSINFO[1] >= 501 )) ; then
+    for c in "${PROMPT_COMMAND[@]}" ; do
+      [[ $c == "$1" ]] && return 0
+    done
+    PROMPT_COMMAND+=("$1")
+  elif [[ "; $PROMPT_COMMAND; " != *"; $1; "* ]] ; then
+    PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }$1"
+  fi
+}
+
 # colorful prompt: user@host green after success, red after failure.
 # Colors and the SSH tag are looked up once instead of on every prompt.
 __ps1_status=("$(tput setaf 2 2> /dev/null)" "$(tput setaf 1 2> /dev/null)")
 __ps1_reset=$(tput sgr0 2> /dev/null)
 __ps1_ssh=${SSH_CLIENT:+[SSH] }
-PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__screen_info)\n\$ '
+PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD${__screen_info_str}\n\$ '
 
 # disable ctrl+s/ctrl+q flow control: ctrl+s no longer freezes the terminal
 # (and becomes forward history search)
@@ -179,33 +193,31 @@ fi
 if command -v screen &> /dev/null ; then
   alias screenS='screen -S'
   alias screenR='screen -R'
-__screen_info () {
-if [[ $TERM == screen || $TERM == screen.* ]]; then
-    echo -n ' {C-a '
-    tput rev; echo -n 'd'; tput sgr0; echo -n 'etach'
-    tput sgr0; echo -n " / "
-    echo -n 'splitR'; tput setaf 2; echo -n '-'; tput setaf 1; echo -n '| '; tput rev; tput setaf 2; echo -n 'S'; tput setaf 1; echo -n '|'
-    tput sgr0; echo -n " / "
-    echo -n 'removeR '; tput rev; echo -n "X"
-    tput sgr0; echo -n " / "
-    tput rev; echo -n 'c'; tput sgr0; echo -n 'reateW'
-    tput sgr0; echo -n " / "
-    tput rev; echo -n 'k'; tput sgr0; echo -n 'illW'
-    tput sgr0; echo -n " / "
-    echo -n 'Wlist '; tput rev; echo -n '"'
-    tput sgr0; echo -n " / "
-    echo -n 'copy '; tput rev; echo -n 'esc'
-    tput sgr0; echo -n " / "
-    echo -n 'terminate '; tput rev; echo -n '\'
-    tput sgr0; echo -n '}'
-fi
-    __detached=$(pgrep -x screen &> /dev/null && echo -n $(screen -ls | grep Detached | awk -F ' ' '{print $1}'))
-    [ -z "${__detached}" ] || (echo -n " detached:["; echo -n "${__detached}"; echo -n "]")
-}
-else
-__screen_info () {
-  return
-}
+  # key help shown in the prompt inside screen; built once, with the color
+  # codes marked as non-printing (\001..\002) for readline
+  __screen_help=
+  if [[ $TERM == screen || $TERM == screen.* ]] ; then
+    __screen_help=$(
+      r=$'\001'$(tput rev)$'\002' n=$'\001'$(tput sgr0)$'\002'
+      g=$'\001'$(tput setaf 2)$'\002' e=$'\001'$(tput setaf 1)$'\002'
+      printf '%s' " {C-a ${r}d${n}etach / splitR${g}-${e}| ${r}${g}S${e}|${n} / removeR ${r}X${n} / ${r}c${n}reateW / ${r}k${n}illW / Wlist ${r}\"${n} / copy ${r}esc${n} / terminate ${r}\\${n}}"
+    ) 2> /dev/null
+  fi
+  # runs before every prompt: help + detached sessions. A detached session's
+  # socket lacks the owner execute bit. Reading that needs stat (test -x is
+  # unreliable as root), but it only runs when there are sessions at all.
+  __screen_dir=${SCREENDIR:-/run/screen/S-${USER:-$(id -un)}}
+  __screen_info () {
+    local socks=("$__screen_dir"/*) mode name detached=
+    if [ -e "${socks[0]}" ] ; then
+      while read -r mode name ; do
+        name=${name##*/}
+        [[ ${mode:3:1} == - && -d /proc/${name%%.*} ]] && detached+=" $name"
+      done <<< "$(stat -c '%A %n' -- "${socks[@]}" 2> /dev/null)"
+    fi
+    __screen_info_str=$__screen_help${detached:+ detached:[${detached# }]}
+  }
+  __prompt_command_add __screen_info
 fi
 
 if command -v git &> /dev/null ; then
@@ -234,7 +246,7 @@ if command -v git &> /dev/null ; then
     export GIT_PS1_SHOWDIRTYSTATE=1
 
     if __git_ps1 &> /dev/null ; then
-        PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__git_ps1)$(__screen_info)\n\$ '
+        PS1='\[${__ps1_status[$?>0]}\]${__ps1_ssh}\u@\h\[${__ps1_reset}\]:$PWD$(__git_ps1)${__screen_info_str}\n\$ '
     fi
 
     if declare -F __git_complete &> /dev/null ; then
@@ -395,7 +407,7 @@ export HISTCONTROL=ignorespace   # leading space hides commands from history
 export HISTFILESIZE=100000       # increase history file size (default is 500)
 export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 # ensure synchronization between bash memory and history file
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+__prompt_command_add 'history -a; history -n'
 if command -v hstr &> /dev/null ; then
   alias hh=hstr                    # hh to be alias for hstr
   export HSTR_CONFIG=hicolor       # get more colors
